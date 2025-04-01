@@ -20,3 +20,7 @@ export const navMenu = [
     link: "/"
   }
 ];
+
+export const handleClick = (setIsOpen) => {
+  setIsOpen(false);
+};

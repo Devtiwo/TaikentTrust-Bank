@@ -3,6 +3,7 @@
 @theme {
   --color-blue-sapphire: #1891c8;
   --color-blue-hover: #166386;
+  --color-blue-bground: #F7FCFE;
 }
 
 * {
