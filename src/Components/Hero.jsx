@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { slideLeft, slideRight } from './Utilities/animation';
+import { slideLeftRotate, slideRight } from './Utilities/animation';
 
 const Hero = () => {
   return (
@@ -29,14 +29,14 @@ const Hero = () => {
             initial="hidden"
             animate="visible" 
             className="!mt-10">
-            <Link to="/register" className="!mt-5 max-w-[150px] self-center lg:self-start text-white text-center text-base px-8 py-4 font-semibold rounded-lg bg-blue-sapphire cursor-pointer hover:bg-blue-hover transition duration-[0.5s] ease-in-out">
-              Join Us
+            <Link to="/login" className="!mt-5 max-w-[150px] self-center lg:self-start text-white text-center text-base px-8 py-4 font-semibold rounded-lg bg-blue-sapphire cursor-pointer hover:bg-blue-hover transition duration-[0.5s] ease-in-out">
+              Login 
             </Link>
             </motion.div>
           </div>
           <div className="flex item-center justify-center pt-10">
             <motion.img
-            variants={slideLeft()}
+            variants={slideLeftRotate()}
             initial="hidden"
             animate="visible"
             src="../../src/assets/heroimg.png" alt="hero image" className="lg:w-[600px]"/>

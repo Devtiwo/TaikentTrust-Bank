@@ -6,7 +6,7 @@ export const navMenu = [
   },
   {
     id: 2,
-    title: "Checking & Savings",
+    title: "About Us",
     link: "/"
   },
   {
