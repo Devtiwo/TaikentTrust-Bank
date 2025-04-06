@@ -11,7 +11,7 @@ const Dream = () => {
     threshold: 0.1
   });
   return (
-    <section className="bg-neutral-100 pb-50">
+    <section className="bg-neutral-100 pb-10 lg:pb-20">
         <motion.div
         ref={ref}
         variants={slideLeft(1.5)}

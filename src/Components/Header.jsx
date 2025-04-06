@@ -29,9 +29,6 @@ const Header = () => {
             </ul>
         </div>
         <div className="hidden lg:flex gap-2">
-            <Link to="/register" className="text-white text-base px-4 py-2 font-medium rounded-lg bg-blue-sapphire cursor-pointer hover:bg-blue-hover transition duration-[0.5s] ease-in-out">
-                Create An Account
-            </Link>
             <Link to="/login" className="text-blue-sapphire cursor-pointer text-base px-8 py-2 font-medium rounded-lg border-2 border-blue-sapphire transition duration-[0.5s] ease-in-out hover:bg-blue-sapphire hover:text-white">
               Login
             </Link>

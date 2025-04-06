@@ -3,6 +3,8 @@ import Header from '../Components/Header';
 import Hero from '../Components/Hero';
 import Highlight from '../Components/Highlight';
 import Dream from '../Components/Dream';
+import Testimonial from '../Components/Testimonial';
+import Footer from '../Components/Footer';
 
 const Home = () => {
   return (
@@ -11,6 +13,8 @@ const Home = () => {
       <Hero />
       <Highlight />
       <Dream />
+      <Testimonial />
+      <Footer />
     </>
   )
 }

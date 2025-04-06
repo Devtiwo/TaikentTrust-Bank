@@ -29,8 +29,8 @@ const Hero = () => {
             initial="hidden"
             animate="visible" 
             className="!mt-10">
-            <Link to="/register" className="!mt-5 max-w-[150px] self-center lg:self-start text-white text-center text-base px-8 py-4 font-semibold rounded-lg bg-blue-sapphire cursor-pointer hover:bg-blue-hover transition duration-[0.5s] ease-in-out">
-              Join Us
+            <Link to="/login" className="!mt-5 max-w-[150px] self-center lg:self-start text-white text-center text-base px-8 py-4 font-semibold rounded-lg bg-blue-sapphire cursor-pointer hover:bg-blue-hover transition duration-[0.5s] ease-in-out">
+              Login 
             </Link>
             </motion.div>
           </div>

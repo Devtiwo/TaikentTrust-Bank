@@ -11,7 +11,7 @@ const Highlight = () => {
     threshold: 0.001
   });
   return (
-    <section className="pb-30">
+    <section className="pb-10 lg:pb-10">
       <motion.div
       ref={ref}
       variants={slideLeft(1.2)}
