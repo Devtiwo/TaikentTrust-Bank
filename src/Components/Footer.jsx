@@ -3,21 +3,15 @@ import { info } from './Utilities/footerData';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { slideUp } from './Utilities/animation';
-import { useInView } from "react-intersection-observer";
 
 const Footer = () => {
-  const { ref, inView } = useInView({
-      triggerOnce: true,
-      threshold: 0.1
-    });
   return (
     <footer>
         <section className="bg-[#E3F4FB] py-20">
           <motion.div
-          ref={ref}
           variants={slideUp(1.5)}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          animate="visible"
           className="container rounded-3xl p-20  bg-slate-600 lg:bg-gradient-to-r from-slate-900 via-[#219dd6] to-blue-sapphire text-white">
             <div className="flex flex-col gap-10 lg:flex-row justify-around mb-10">
               {info.map((items, index) => (
