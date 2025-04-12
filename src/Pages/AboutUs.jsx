@@ -14,7 +14,7 @@ const AboutUs = () => {
               At Titan Trust Bank, we’re reshaping the way people experience finance in the digital age. We believe that banking should be simple, secure, and accessible to everyone—anytime, anywhere. With a perfect blend of innovation and trust, we offer a platform that empowers individuals and businesses to take full control of their financial lives, effortlessly.
               </p>
             </div>
-            <div className="mt-10 lg:mt-0 flex items-center">
+            <div className="mt-10 mb-10 lg:mb-0 lg:mt-0 flex items-center order-first lg:order-last">
                 <img src="../../src/assets/aboutimg.png" alt="About image" className="rounded-2xl"/>
             </div>
         </div>
