@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import AboutUs from './Pages/AboutUs';
 import Login from './Components/Login';
 import Dashboard from './Pages/Dashboard';
+import Notfound from './Pages/Notfound';
  
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
        <Route path="/about" element={<AboutUs />} />
        <Route path="/login" element={<Login />} />
        <Route path="/dashboard" element={<Dashboard />} />
+       <Route path="*" element={<Notfound />} />
      </Routes>
     </BrowserRouter>
     <ToastContainer position="top-center" theme="colored" hideProgressBar="false" autoClose={5000} />
