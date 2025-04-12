@@ -21,9 +21,13 @@ const Header = () => {
         </div>
         <div>
             <ul className="flex items-center gap-5 text-base font-semibold hidden lg:flex">
-              {navMenu.map((item) => (
+              {navMenu.sort((a, b) => a.isExternal - b.isExternal).map((item) => (
                 <li key={item.id} className="hover:text-blue-sapphire cursor-pointer">
-                 <Link to={item.link}>{item.title}</Link> 
+                  {item.isExternal ? (
+                   <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+                  ) : (
+                    <Link to={item.link}>{item.title}</Link>
+                 )}
                 </li>
               ))}
             </ul>

@@ -17,8 +17,14 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
         >
           <div className="text-2xl text-white bg-slate-900 font-semibold py-20 rounded-3xl">
             <ul className="flex flex-col gap-10 items-center">
-              {navMenu.map((item) => (
-                <li key={item.id}><Link to={item.link} onClick={() => handleClick(setIsOpen)}>{item.title}</Link></li>
+              {navMenu.sort((a, b) => a.isExternal - b.isExternal).map((item) => (
+                <li key={item.id}>
+                  {item.isExternal ? (
+                    <a href={item.link} target="_blank" rel="noopener noreferrer" onClick={() => handleClick(setIsOpen)}>{item.title}</a>
+                  ) : (
+                  <Link to={item.link} onClick={() => handleClick(setIsOpen)}>{item.title}</Link>
+                  )}
+                </li>
               ))}
             </ul>
             <div className="flex flex-col items-center !mt-10 gap-10">

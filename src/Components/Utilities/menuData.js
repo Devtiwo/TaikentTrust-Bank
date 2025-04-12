@@ -2,22 +2,26 @@ export const navMenu = [
   {
     id: 1,
     title: "Home",
-    link: "/"
+    link: "/",
+    isExternal: false
   },
   {
     id: 2,
     title: "About Us",
-    link: "/about"
+    link: "/about",
+    isExternal: false
   },
   {
     id: 3,
     title: "Loans",
-    link: "/"
+    link: "https://loan-mart.netlify.app",
+    isExternal: true
   },
   {
     id: 4,
     title: "Investments",
-    link: "/"
+    link: "https://taikentinvestments.com",
+    isExternal: true
   }
 ];
 
