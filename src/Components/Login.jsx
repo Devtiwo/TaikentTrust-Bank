@@ -39,7 +39,7 @@ const Login = () => {
             <div>
                <Link to="/"><img src="/images/titantrust.png" alt="logo" className="h-[150px]" /></Link>
             </div>
-            <div>
+            <div className="p-2 mb-20">
               <h1 className="text-3xl font-semibold mb-5 text-center">Welcome Back! Please sign In</h1>
               <form className="mt-10 p-5 w-full lg:max-w-[90%]"
               autoComplete="off"
