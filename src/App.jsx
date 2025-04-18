@@ -7,6 +7,7 @@ import AboutUs from './Pages/AboutUs';
 import Login from './Components/Login';
 import Dashboard from './Pages/Dashboard';
 import Notfound from './Pages/Notfound';
+import Forgotpassword from './Pages/Forgotpassword';
  
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
        <Route path="/home" element={<Navigate to="/" />} />
        <Route path="/about" element={<AboutUs />} />
        <Route path="/login" element={<Login />} />
+       <Route path="/forgot-password" element={<Forgotpassword />} />
        <Route path="/dashboard" element={<Dashboard />} />
        <Route path="*" element={<Notfound />} />
      </Routes>
