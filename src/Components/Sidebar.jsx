@@ -3,7 +3,7 @@ import { CiMenuFries } from "react-icons/ci";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { BiSupport } from "react-icons/bi";
-import { GrSettingsOption } from "react-icons/gr";
+import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Sidebar = () => {
     { name: "Dashboard", path: "/dashboard/overview", icon: <IoHomeOutline className="text-xl mt-1 font-bold" /> },
     { name: "Transfers", path: "/dashboard/transfers", icon: <FaMoneyBillTransfer className="text-xl mt-1 font-bold" /> },
     { name: "Support", path: "/dashboard/support", icon: <BiSupport className="text-xl mt-1 font-bold" /> },
-    { name: "settings", path: "/dashboard/settings", icon: <GrSettingsOption className="text-xl mt-1 font-bold" /> }
+    { name: "Profile", path: "/dashboard/profile", icon: <CgProfile className="text-xl mt-1 font-bold" /> }
   ];
   return (
     <>
@@ -42,7 +42,7 @@ const Sidebar = () => {
          <nav>
            {dashLinks.map((link) => (
              <Link key={link.name} to={link.path}
-             className={`flex justify-center gap-3 font-semibold text-lg lg:text-xl my-10 ${activeLink === link.path ? "text-white bg-blue-sapphire" : "hover:text-blue-sapphire"} px-4 py-2 rounded-full`}
+             className={`flex justify-center gap-3 font-semibold text-lg my-10 ${activeLink === link.path ? "text-white bg-blue-sapphire" : "hover:text-blue-sapphire"} px-4 py-2 rounded-full`}
              onClick={() => handleLink(link.path)}
              >
                {link.icon}

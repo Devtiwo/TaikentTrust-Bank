@@ -6,7 +6,7 @@ const Overview = () => {
   return (
     <section className="h-screen lg:ms-80 flex flex-col lg:flex-row gap-5">
       <div className="w-full lg:w-2/3">
-        <h1 className="font-medium text-xl lg:text-3xl">
+        <h1 className="font-medium text-xl lg:text-2xl">
           Welcome, <span className="text-blue-sapphire">Andrian</span>
         </h1>
 
