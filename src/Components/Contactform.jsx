@@ -99,7 +99,7 @@ const Contactform = () => {
         {/* Submit button */}
         <div className="text-center">
           <button type="submit"
-          className=" border cursor-pointer py-3 px-8 text-white font-semibold rounded-3xl bg-blue-sapphire hover:bg-blue-hover transition duration-[0.5s] ease-in-out"
+          className=" border cursor-pointer py-2 px-8 text-white font-semibold rounded-3xl bg-blue-sapphire hover:bg-blue-hover transition duration-[0.5s] ease-in-out"
           >
             Send Message
          </button>
