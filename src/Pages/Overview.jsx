@@ -1,13 +1,15 @@
 import React from "react";
 import { FcSimCardChip } from "react-icons/fc";
 import { SiVisa } from "react-icons/si";
+import { useSelector } from "react-redux";
 
 const Overview = () => {
+  const { user } = useSelector((state) => state.user);
   return (
     <section className="h-screen lg:ms-80 flex flex-col lg:flex-row gap-5">
       <div className="w-full lg:w-2/3">
         <h1 className="font-medium text-xl lg:text-2xl">
-          Welcome, <span className="text-blue-sapphire">Andrian</span>
+          Welcome, <span className="text-blue-sapphire">{user?.fname}</span>
         </h1>
 
         {/* Balance Card */}
@@ -15,7 +17,7 @@ const Overview = () => {
           <small className="text-gray-600">Available Balance</small>
           <h1 className="text-5xl mt-1">$75,650,00.00</h1>
           <h2 className="mt-10 text-xs text-gray-600">Checking</h2>
-          <p className="text-gray-600 text-sm">Account Number: 8907689542</p>
+          <p className="text-gray-600 text-sm">Account Number: {user?.accountNumber}</p>
         </div>
 
         {/* Recent transactions */}
@@ -44,7 +46,7 @@ const Overview = () => {
             {/* Avatar section */}
             <div className="z-10 mt-22">
               <img
-                src="../../src/assets/avatar.png"
+                src="/assets/avatar.png"
                 alt="avatar"
                 className="h-20 w-20 rounded-full border-3 border-gray-300"
               />
@@ -52,8 +54,8 @@ const Overview = () => {
 
             {/* Name section */}
             <div className="mt-4">
-              <h2 className="font-bold text-lg">Adrian Hajdin</h2>
-              <p className="text-sm text-gray-500">adrian@jsmastery.pro</p>
+              <h2 className="font-bold text-lg">{user?.fname} {user?.lname}</h2>
+              <p className="text-sm text-gray-500">{user?.email}</p>
             </div>
 
             {/* Bank card section */}

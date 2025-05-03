@@ -1,11 +1,11 @@
 import { GiCash } from "react-icons/gi";
 import { FaChartLine, FaBitcoin, FaGlobe } from "react-icons/fa";
 import { IoWalletSharp } from "react-icons/io5";
-import phoneImg from '../../assets/phone.png';
-import trackerImg from '../../assets/tracker.png'
-import transferImg from '../../assets/transfer.png';
-import loanImg from '../../assets/loan.png';
-import investImg from '../../assets/trading.png';
+import phoneImg from '/assets/phone.png';
+import trackerImg from '/assets/tracker.png'
+import transferImg from '/assets/transfer.png';
+import loanImg from '/assets/loan.png';
+import investImg from '/assets/trading.png';
 
 export const featuresData1 = [
   {

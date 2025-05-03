@@ -7,7 +7,7 @@ import { slideUp } from './Utilities/animation';
 const Footer = () => {
   return (
     <footer>
-        <section className="bg-[#E3F4FB] py-20">
+        <section className="bg-[#E3F4FB] py-5">
           <motion.div
           variants={slideUp(1.5)}
           initial="hidden"

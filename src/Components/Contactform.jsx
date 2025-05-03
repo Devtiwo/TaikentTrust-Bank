@@ -42,57 +42,57 @@ const Contactform = () => {
         {/* First & Last name */}
         <div className="flex gap-5 mb-5">
           <div className="flex flex-col w-full">
-            <label htmlFor="fname">First Name</label>
+            <label htmlFor="fname" className="ml-2 text-sm font-medium">First Name</label>
             <input type="text" name="fname" id="fname" 
             placeholder="First Name"
-            className="py-2 px-4 border my-2"
+            className="py-2 px-4 border-2 border-gray-300 focus:outline-none rounded-3xl my-2"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.fname}
             />
-            <small className="text-red-600">
+            <small className="ml-2 text-red-600">
               {formik.touched.fname && formik.errors.fname}
             </small>
           </div>
           <div className="flex flex-col w-full">
-            <label htmlFor="lname">Last Name</label>
+            <label htmlFor="lname" className="ml-2 text-sm font-medium">Last Name</label>
             <input type="text" name="lname" id="lname" 
             placeholder="Last Name"
-            className="py-2 px-4 border my-2"
+            className="py-2 px-4 border-2 border-gray-300 focus:outline-none rounded-3xl my-2"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.lname}
             />
-            <small className="text-red-600">
+            <small className="ml-2 text-red-600">
               {formik.touched.lname && formik.errors.lname}
             </small>
           </div>
         </div>
         {/* Email section */}
         <div className="flex flex-col w-full mb-5">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className="ml-2 text-sm font-medium">Email</label>
           <input type="email" name="email" id="email" 
           placeholder="Email"
-          className="py-2 px-4 border my-2"
+          className="py-2 px-4 border-2 border-gray-300 focus:outline-none rounded-3xl my-2"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
           />
-          <small className="text-red-600">
+          <small className="ml-2 text-red-600">
             {formik.touched.email && formik.errors.email}
           </small>
         </div>
         {/* Message box section */}
         <div className="flex flex-col w-full mb-10">
-          <label htmlFor="message">Message</label>
+          <label htmlFor="message" className="ml-2 text-sm font-medium">Message</label>
           <textarea name="message" id="message" 
           placeholder="Tell us what we can help you with"
-          className="py-2 px-4 h-32 border my-2"
+          className="py-2 px-4 h-32 border-2 border-gray-300 focus:outline-none rounded-3xl my-2"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.message}
           />
-          <small className="text-red-600">
+          <small className="ml-2 text-red-600">
             {formik.touched.message && formik.errors.message}
           </small>
         </div>

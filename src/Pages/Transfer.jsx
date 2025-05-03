@@ -149,7 +149,7 @@ const Transfer = () => {
     }
   }
   return (
-    <section className="h-screen lg:ms-80">
+    <section className="h-dvh lg:ms-80">
       <div>
         <h1 className="text-3xl font-medium mb-2">Payment Transfers</h1>
         <p className="text-sm font-medium text-gray-600">Kindly provide accurate information regarding transfer details.</p>
