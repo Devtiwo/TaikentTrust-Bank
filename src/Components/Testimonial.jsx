@@ -32,15 +32,15 @@ const Testimonial = () => {
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       className="container relative py-20  rounded-3xl border-2 border-blue-sapphire bg-blue-bground grid grid-cols-1 lg:grid-cols-2 gap-10">
-      <img src="../../src/assets/starbg.png" alt="Decorative" className="absolute w-[200px] h-[200px] top-1 lg:top-2 left-2 lg:left-8"/>
-      <img src="../../src/assets/starbg.png" alt="Decorative" className="absolute w-[200px] h-[200px] top-210 md:top-170 lg:top-95 right-0 lg:right-0"/>
+      <img src="/assets/starbg.png" alt="Decorative" className="absolute w-[200px] h-[200px] top-1 lg:top-2 left-2 lg:left-8"/>
+      <img src="/assets/starbg.png" alt="Decorative" className="absolute w-[200px] h-[200px] top-210 md:top-170 lg:top-95 right-0 lg:right-0"/>
         <div className="p-10">
             <div className="bg-blue-sapphire w-40 py-2 font-medium mt-5 mb-10 rounded-md">
               <p className="text-center text-white">Testimonials</p>
             </div>
             <div>
                 <h3 className="text-5xl font-semibold">What clients say <br /> about us</h3>
-                <img src="../../src/assets/trust.png" alt="decorative" className="w-[80px]"/>
+                <img src="/assets/trust.png" alt="decorative" className="w-[80px]"/>
             </div>
         </div>
         <div className="pt-20">

@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
         return rejectWithValue(response.data.message);
       }
     } catch (err) {
-      return rejectWithValue("SignIn failed! please try again");
+      return rejectWithValue(err.response?.data?.message || "SignIn failed! please try again");
     }
   }
 );
@@ -35,13 +35,13 @@ export const authSlice = createSlice({
       state.status = "idle";
       state.user = null;
       state.token = null;
+      state.message = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
         state.status = "loading";
-        state.message = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";

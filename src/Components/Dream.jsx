@@ -37,7 +37,7 @@ const Dream = () => {
               </div>
            </div>
            <div className="flex justify-center items-center">
-              <img src="../../src/assets/card.png" alt="debit card" />
+              <img src="/assets/card.png" alt="debit card" />
            </div>
         </motion.div>
     </section>

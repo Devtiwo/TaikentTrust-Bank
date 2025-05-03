@@ -8,9 +8,9 @@ const Hero = () => {
     <>
       <section className="relative">
         <div className="relative">
-            <img src="../../src/assets/starbg.png" alt="Decorative" className="absolute w-xs lg:w-sm  top-1 lg:top-2 left-2 lg:left-8"/>
-            <img src="../../src/assets/starbg.png" alt="Decorative" className="absolute w-xs lg:w-sm  left-0 lg:left-180 top-70 lg:top-120"/>
-            <img src="../../src/assets/3star.png" alt="Decorative" className="absolute w-2xs lg:w-sm top-90 right-0"/>
+            <img src="/assets/starbg.png" alt="Decorative" className="absolute w-xs lg:w-sm  top-1 lg:top-2 left-2 lg:left-8"/>
+            <img src="/assets/starbg.png" alt="Decorative" className="absolute w-xs lg:w-sm  left-0 lg:left-180 top-70 lg:top-120"/>
+            <img src="/assets/3star.png" alt="Decorative" className="absolute w-2xs lg:w-sm top-90 right-0"/>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 top-[120px] min-h-[700px]">
           <div className="bg-blue-bground flex flex-col justify-center  py-20 px-5 lg:px-40 text-center lg:text-left lg:max-w-[1200px]">
@@ -39,7 +39,7 @@ const Hero = () => {
             variants={slideLeftRotate()}
             initial="hidden"
             animate="visible"
-            src="../../src/assets/heroimg.png" alt="hero image" className="lg:w-[600px]"/>
+            src="/assets/heroimg.png" alt="hero image" className="lg:w-[600px]"/>
           </div>
         </div>
       </section>
