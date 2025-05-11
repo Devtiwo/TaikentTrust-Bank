@@ -23,11 +23,9 @@ const Profile = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const token = localStorage.getItem("token");
-        console.log(token)
-        const response = await axios.post(`${baseUrl}/user/change-password`, values, {
+        const response = await axios.patch(`${baseUrl}/user/change-password`, values, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        console.log(token)
         if (response.data.status) {
           toast.success(response.data.message);
           resetForm();

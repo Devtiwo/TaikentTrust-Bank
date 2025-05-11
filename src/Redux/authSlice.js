@@ -20,43 +20,85 @@ export const login = createAsyncThunk(
   }
 );
 
+export const fetchAdminUser = createAsyncThunk(
+  "auth/fetchAdminUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return rejectWithValue("please login again");
+      }
+      const response = await axios.get(`${baseUrl}/admin/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.data.status) {
+        return response.data.user;
+      } else {
+        return rejectWithValue(response.data.message);
+      }
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Error fetching admin user data");
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    status: "idle",
-    message: null,
+    admin: null,
     user: null,
-    token: null
+    token: null,
+    loginStatus: "idle",
+    adminStatus: "idle",
+    loginMessage: null,
+    adminMessage: null
   },
   reducers: {
     logout: (state) => {
       state.isLoggedIn = false;
-      state.status = "idle";
+      state.admin= null;
       state.user = null;
       state.token = null;
-      state.message = null;
+      state.loginStatus = "idle";
+      state.adminStatus = "idle";
+      state.loginMessage = null;
+      state.adminMessage = null;
     },
+    clearAdmin: (state) => {
+      state.admin = null;
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.status = "loading";
+        state.loginStatus = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.loginStatus = "succeeded";
         state.isLoggedIn = true;
-        state.message = action.payload.message;
-        state.user = action.payload.user;
+        state.loginMessage = action.payload.message;
         state.token = action.payload.token;
+        state.user = action.payload.user;
       })
       .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
+        state.loginStatus = "failed";
         state.isLoggedIn = false;
-        state.message = action.payload;
+        state.loginMessage = action.payload;
       })
+      .addCase(fetchAdminUser.pending, (state) => {
+        state.adminStatus = "loading";
+      })
+      .addCase(fetchAdminUser.fulfilled, (state, action) => {
+        state.adminStatus = "succeeded";
+        state.admin = action.payload;
+      })
+      .addCase(fetchAdminUser.rejected, (state, action) => {
+        state.adminStatus = "failed";
+        state.adminMessage = action.payload;
+      });
   }
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, clearAdmin } = authSlice.actions;
 export default authSlice.reducer;

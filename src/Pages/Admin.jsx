@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Adminsidebar from '../Components/Adminsidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LuLogOut } from "react-icons/lu";
 import { logout } from "../Redux/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUsers } from '../Redux/adminSlice';
+import { fetchAllUsers } from '../Redux/adminSlice';
+import { fetchAdminUser } from '../Redux/authSlice';
 
 const Admin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { users } = useSelector((state) => state.admin);
+  const { admin } = useSelector((state) => state.auth);
+  const token = localStorage.getItem("token");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     dispatch(logout());
+    dispatch(clearUsers());
     navigate("/login");
   };
+  
+  useEffect(() => {
+    if(!token) {
+      navigate("/login");
+      return;
+    };
+    if (!users || users.length === 0) {
+      dispatch(fetchAllUsers());
+    }
+    if (!admin) {
+      dispatch(fetchAdminUser());
+    }
+  }, [dispatch, navigate, token]);
 
   return (
     <section className="flex gap-10">

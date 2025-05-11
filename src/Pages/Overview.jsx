@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect} from "react";
 import { FcSimCardChip } from "react-icons/fc";
 import { SiVisa } from "react-icons/si";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUser } from "../Redux/userSlice";
+import { formatCurrency } from "../Components/Utilities/currencyFormat";
 
 const Overview = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(fetchUser());
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [dispatch]);
+
   return (
     <section className="h-screen lg:ms-80 flex flex-col lg:flex-row gap-5">
       <div className="w-full lg:w-2/3">
@@ -15,26 +26,44 @@ const Overview = () => {
         {/* Balance Card */}
         <div className="mt-5 px-8 py-5 bg-[#d9f2f9] rounded-2xl font-semibold">
           <small className="text-gray-600">Available Balance</small>
-          <h1 className="text-5xl mt-1">$75,650,00.00</h1>
-          <h2 className="mt-10 text-xs text-gray-600">Checking</h2>
+          <h1 className="text-5xl mt-1">{formatCurrency(user?.balance)}</h1>
+          <h2 className="mt-10 text-sm text-gray-600"> Account Type: Checking</h2>
           <p className="text-gray-600 text-sm">Account Number: {user?.accountNumber}</p>
         </div>
 
         {/* Recent transactions */}
         <div className="mt-10 mb-5">
-          <h2 className="mb-3 text-3xl">Recent Transactions</h2>
+          <h2 className="mb-3 text-3xl">Transactions History</h2>
           <hr className="text-gray-400" />
         </div>
         <div>
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-b-gray-400">
+              <tr className="border-b border-b-gray-400 leading-10">
                 <th>Type</th>
                 <th>Amount</th>
                 <th>Date</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {user?.transactions && user.transactions.length > 0 ? ( 
+                user.transactions.map((transaction, index) => (
+                  <tr key={index} className="border-b border-b-gray-400 leading-10">
+                    <td style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
+                      {transaction.type}
+                    </td>
+                    <td style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
+                      {formatCurrency(transaction.amount)}
+                    </td>
+                    <td>{new Date(transaction.date).toLocaleDateString("en-US")}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr className="border-b border-b-gray-400 leading-50">
+                  <td colSpan="3" className="text-center text-gray-500">No transactions available</td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
       </div>
@@ -80,7 +109,7 @@ const Overview = () => {
                 <div className="mt-15 flex justify-between">
                   <div>
                     <span className="text-xs">Balance</span>
-                    <h1 className="font-semibold text-xl">$75,650.00</h1>
+                    <h1 className="font-semibold text-lg">{formatCurrency(user?.balance)}</h1>
                   </div>
                   <div>
                     <SiVisa className="text-5xl mt-2 " />

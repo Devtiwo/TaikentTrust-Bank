@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoIosHome } from "react-icons/io";
-import { MdAccountBalance } from "react-icons/md";
-import { RiDeleteBin2Line } from "react-icons/ri";
+import { MdCreateNewFolder } from "react-icons/md";
+import { MdOutlineManageAccounts } from "react-icons/md";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 
 import { CiMenuFries } from "react-icons/ci";
@@ -20,23 +20,18 @@ const Adminsidebar = () => {
     {
       name: "Dashboard",
       path: "/admin/dashboard",
-      icon: <IoIosHome className="text-xl mt-1 font-bold" />,
+      icon: <IoIosHome className="text-xl font-bold" />,
     },
     {
       name: "Create Account",
       path: "/admin/register",
-      icon: <MdAccountBalance className="text-xl mt-1 font-bold" />,
+      icon: <MdCreateNewFolder className="text-xl font-bold" />,
     },
     {
-      name: "Delete Account",
-      path: "/admin/delete",
-      icon: <RiDeleteBin2Line className="text-xl mt-1 font-bold" />,
-    },
-    {
-      name: "Update Balance",
-      path: "/admin/balance",
-      icon: <MdOutlineAccountBalanceWallet className="text-xl mt-1 font-bold" />,
-    },
+      name: "Manage Accounts",
+      path: "/admin/manage",
+      icon: <MdOutlineManageAccounts className="text-xl font-bold" />,
+    }
   ];
   return (
     <>
@@ -72,7 +67,7 @@ const Adminsidebar = () => {
             <Link
               key={link.name}
               to={link.path}
-              className={`flex justify-center gap-3 font-semibold text-lg my-10 ${
+              className={`flex justify-center gap-2 font-semibold text-base my-10 ${
                 activeLink === link.path
                   ? "text-white bg-blue-sapphire"
                   : "hover:text-blue-sapphire"

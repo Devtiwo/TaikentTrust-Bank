@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const transactionSchema = require("./transactionmodel");
 let saltRound = 10;
 
 const userSchema = mongoose.Schema({
@@ -8,6 +9,8 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  balance: { type: Number, default: 0 },
+  transactions: [transactionSchema],
   resetToken: { type: String },
   tokenExpires: { type: Date },
   accountNumber: { type: String, required: true, unique: true },
