@@ -18,6 +18,8 @@ import Transfer from './Pages/Transfer';
 import Admin from './Pages/Admin';
 import Adminhome from './Pages/Adminhome';
 import Signup from './Pages/Signup';
+import Resetpassword from './Pages/Resetpassword';
+import Manageaccount from './Pages/Manageaccount';
  
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
        <Route path="/about" element={<AboutUs />} />
        <Route path="/login" element={<Login />} />
        <Route path="/forgot-password" element={<Forgotpassword />} />
+       <Route path="/reset-password/:token" element={<Resetpassword />} />
        {/* User Dashboard Routes */}
        <Route path="/dashboard" element={<ProtectedRoute role="user" > <Dashboard /> </ProtectedRoute>} >
          <Route path="overview" element={<Overview />} />
@@ -60,6 +63,7 @@ function App() {
           <Route path="dashboard" element={<Adminhome />} />
           <Route index element={<Adminhome />} />
           <Route path="register" element={<Signup />} />
+          <Route path="manage" element={<Manageaccount />} />
        </Route>
        <Route path="*" element={<Notfound />} />
      </Routes>

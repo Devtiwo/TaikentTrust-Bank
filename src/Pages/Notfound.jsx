@@ -6,7 +6,7 @@ const Notfound = () => {
     <section className="h-screen">
       <div className="container p-5">
         <div>
-          <img src="../src/assets/4041.png" alt="notfound image" className="mx-auto" />
+          <img src="/assets/4041.png" alt="notfound image" className="mx-auto" />
         </div>
         <div>
           <div className="w-full lg:max-w-5xl mx-auto my-5">

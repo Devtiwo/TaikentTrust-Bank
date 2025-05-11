@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from "../Redux/authSlice";
 import { toast } from 'react-toastify';
 import Preloader from '../Components/Preloader';
+import { fetchAdminUser } from '../Redux/authSlice';
+import { fetchUser } from '../Redux/userSlice'
  
 
 const Login = () => {
@@ -38,6 +40,11 @@ const Login = () => {
         const result = await dispatch(login(values));
         if (login.fulfilled.match(result)) {
           toast.success(result.payload);
+          if (result.payload.user?.role === "admin") {
+            await dispatch(fetchAdminUser());
+          } else if (result.payload.user?.role === "user") {
+            await dispatch(fetchUser());
+          }
         } else {
           toast.error(result.payload);
           setLoading(false);

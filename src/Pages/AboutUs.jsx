@@ -15,7 +15,7 @@ const AboutUs = () => {
               </p>
             </div>
             <div className="mt-10 mb-10 lg:mb-0 lg:mt-0 flex items-center order-first lg:order-last">
-                <img src="../../src/assets/aboutimg.png" alt="About image" className="rounded-2xl"/>
+                <img src="/assets/aboutimg.png" alt="About image" className="rounded-2xl"/>
             </div>
         </div>
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-5">

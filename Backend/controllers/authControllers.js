@@ -1,6 +1,6 @@
 const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-const { resetPasswordEmail } = require("../utilities/email");
+const { resetPasswordEmail, passwordChangeEmail } = require("../utilities/email");
 
 
 const login = async (req, res) => {
@@ -20,8 +20,7 @@ const login = async (req, res) => {
     const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {expiresIn: "1h"});
     res.status(200).json({ status: true, message: "Login successful", token, 
       user: {
-        email: user.email,
-        role: user.roles 
+        role: user.roles,
       }
     });
   } catch (err) {
@@ -48,4 +47,30 @@ const forgotPassword = async (req, res) => {
   }
 }
 
-module.exports = { login, forgotPassword };
+const resetPassword = async (req, res) => {
+  const { password, confirmpass } = req.body;
+  const token = req.params.token;
+  try {
+    if (!password || !confirmpass) {
+      return res.status(400).json({ status: false, message: "password and confirm password required!" });
+    }
+    if (password !== confirmpass) {
+      return res.status(400).json({ status: false, message: "passwords do not match!" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await userModel.findOne({ email: decoded.email });
+    if (!user || user.resetToken !== token || user.tokenExpires < Date.now()) {
+      return res.status(400).json({ status: false, message: "Session expired! Request a new password reset link" });
+    }
+    user.password = password;
+    user.resetToken = undefined;
+    user.tokenExpires = undefined;
+    await user.save();
+    await passwordChangeEmail(user);
+    return res.status(200).json({ status: true, message: "Password changed successfully!" });
+  } catch (err) {
+    return res.status(500).json({ status: false, message: "server error! pls try again" });
+  }
+};
+
+module.exports = { login, forgotPassword, resetPassword };

@@ -51,7 +51,7 @@ const resetPasswordEmail = (user, resetLink) => {
         .container {
           max-width: 600px;
           margin: 0 auto;
-          background-color: #fff;
+          background-color: #f8f9f9;
           padding: 20px;
         }
         .reset-button {
@@ -85,8 +85,58 @@ const resetPasswordEmail = (user, resetLink) => {
          <p>Thank you</p>
        </div>
      </body>
-   </html>
+     </html>
     `
   });
-}
-module.exports = { resetPasswordEmail };
+};
+
+const passwordChangeEmail = (user) => {
+  return transporter.sendMail({
+    from: `TitanTrust <${process.env.SMTP_USER}>`,
+    to: user.email,
+    subject: "You've changed your password",
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          img {
+            margin: 0 auto;
+            display: block;
+            height: 150px;
+            width: 150px;
+          }
+          body {
+            font-family: Roboto, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 10px;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f8f9f9;
+            padding: 20px;
+          }
+          p { 
+            line-height: 1.5;
+           font-size: 15px;
+          }
+       </style>
+     </head>
+     <body>
+       <div class="container">
+         <img src="https://i.imgur.com/3JSx430.png" alt="logo" />
+         <p>Hi ${user.fname}</p>
+         <p>Your password has been changed successfully. If you didn't make this change, please contact support immediately.</p>
+         <p>Thanks for using our services.</p>
+       </div>
+     </body>
+     </html>
+    `
+  });
+};
+
+module.exports = { resetPasswordEmail, passwordChangeEmail };
