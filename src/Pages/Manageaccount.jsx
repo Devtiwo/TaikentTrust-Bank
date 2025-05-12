@@ -44,6 +44,7 @@ const Manageaccount = () => {
         <option value="withdrawal">Withdrawal</option>
       </select>` + 
       `<input id="swal-amount" class="swal2-input" placeholder="Enter Amount" type="number" min="0" />` +
+      `<input id="swal-desc" class="swal2-input" placeholder="Enter description" type="text" />` +
       `<input type="date" id="swal-date" class="swal2-input" />`,
       focusConfirm: false,
       confirmButtonColor: "#27ae60",
@@ -51,11 +52,12 @@ const Manageaccount = () => {
       preConfirm: () => {
         const type = document.getElementById("swal-type").value;
         const amount = document.getElementById("swal-amount").value;
+        const desc = document.getElementById("swal-desc").value;
         const date = document.getElementById("swal-date").value;
-        if (!type || !amount || !date) {
+        if (!type || !amount || !date || !desc) {
           Swal.showValidationMessage(`all fields are required`);
         }
-        return { type, amount, date };
+        return { type, amount, date, desc };
       },
     });
     if (!formValues) return;
@@ -80,27 +82,27 @@ const Manageaccount = () => {
         {status === "loading" && <p>Loading...</p>}
         {status === "failed" && <p>{error}</p>}
         {status === "succeeded" && (
-          <table className="w-full lg:max-w-2/3 text-sm lg:text-base text-left">
+          <table className="w-full lg:max-w-2/3 p-5 text-sm text-left rounded-2xl lg:text-base font-medium">
             <thead className="border-b border-b-gray-300">
-              <tr className="leading-10 text-blue-sapphire">
-                <th>Full Name</th>
+              <tr className="text-blue-sapphire">
+                <th className="p-4">Full Name</th>
                 <th>Email</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id} className="border-b border-b-gray-300 leading-13">
-                  <td>{user.fname} {user.lname}</td>
+                <tr key={user._id} className="odd:bg-gray-100 even:bg-gray-300">
+                  <td className="p-4">{user.fname} {user.lname}</td>
                   <td>{user.email}</td>
                   <td className="flex gap-5 mt-4">
                      <GiWallet
                        onClick={() => handleTopUp(user._id)}
-                       className="text-2xl text-blue-sapphire hover:text-green-500 font-bold cursor-pointer" title="Top up balance" 
+                       className="text-2xl text-green-600 hover:text-green-500 font-bold cursor-pointer" title="Top up balance" 
                      />
                      <RiDeleteBin6Line
                        onClick={() => handleDelete(user._id)}
-                       className="text-2xl text-blue-sapphire hover:text-red-600 font-bold cursor-pointer" title="Delete user"
+                       className="text-2xl text-red-400 hover:text-red-600 font-bold cursor-pointer" title="Delete user"
                       />
                   </td>
                 </tr>
