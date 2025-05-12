@@ -53,7 +53,7 @@ const deleteUser = async (req, res) => {
 
 const updateUserBalance = async (req, res) => {
   const { id } = req.params;
-  const { type, amount, date } = req.body;
+  const { type, amount, desc, date } = req.body;
   try {
     const user = await userModel.findById(id);
       if (!user) {
@@ -64,7 +64,7 @@ const updateUserBalance = async (req, res) => {
         return res.status(400).json({ status: false, message: "Insufficient funds" });
       }
       user.balance += type === "deposit" ? numericAmount : -numericAmount;
-      user.transactions.push({ type, amount: numericAmount, date });
+      user.transactions.push({ type, amount: numericAmount, desc, date });
       await user.save();
       return res.status(200).json({ status: true, message: "User balance updated successfully!", balance: user.balance, transactions: user.transactions});
   } catch (error) {

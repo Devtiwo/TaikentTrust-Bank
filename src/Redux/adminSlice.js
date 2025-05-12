@@ -42,10 +42,10 @@ export const deleteUser = createAsyncThunk(
 
 export const topUpUserBalance = createAsyncThunk(
   'admin/topUpUserBalance',
-  async ({ userId, type, amount, date }, { rejectWithValue }) => {
+  async ({ userId, type, amount, desc, date }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.patch(`${baseUrl}/admin/updateBalance/${userId}`, { type, amount, date }, {
+      const response = await axios.patch(`${baseUrl}/admin/updateBalance/${userId}`, { type, amount, desc, date }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.status) {

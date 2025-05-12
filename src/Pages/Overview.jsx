@@ -36,31 +36,33 @@ const Overview = () => {
           <h2 className="mb-3 text-3xl">Transactions History</h2>
           <hr className="text-gray-400" />
         </div>
-        <div>
-          <table className="w-full text-left">
+        <div className="overflow-x-auto">
+          <table className="min-w-[450px] w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-b-gray-400 leading-10">
-                <th>Type</th>
+              <tr className="border-b border-b-gray-300">
+                <th className="p-4">Type</th>
                 <th>Amount</th>
+                <th>Description</th>
                 <th>Date</th>
               </tr>
             </thead>
             <tbody>
               {user?.transactions && user.transactions.length > 0 ? ( 
                 user.transactions.map((transaction, index) => (
-                  <tr key={index} className="border-b border-b-gray-400 leading-10">
-                    <td style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
+                  <tr key={index} className="odd:bg-gray-100 even:bg-gray-200 font-medium">
+                    <td className="p-4" style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
                       {transaction.type}
                     </td>
                     <td style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
                       {formatCurrency(transaction.amount)}
                     </td>
+                    <td>{transaction.desc}</td>
                     <td>{new Date(transaction.date).toLocaleDateString("en-US")}</td>
                   </tr>
                 ))
               ) : (
-                <tr className="border-b border-b-gray-400 leading-50">
-                  <td colSpan="3" className="text-center text-gray-500">No transactions available</td>
+                <tr className="border-b border-b-gray-400">
+                  <td colSpan="3" className="text-center p-10 text-gray-500">No transactions available</td>
                 </tr>
               )}
             </tbody>
@@ -84,7 +86,7 @@ const Overview = () => {
             {/* Name section */}
             <div className="mt-4">
               <h2 className="font-bold text-lg">{user?.fname} {user?.lname}</h2>
-              <p className="text-sm text-gray-500">{user?.email}</p>
+              <p className="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis">{user?.email}</p>
             </div>
 
             {/* Bank card section */}
