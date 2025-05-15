@@ -10,7 +10,7 @@ const Support = () => {
           <h1 className="text-4xl font-medium">Get in Touch With us Today</h1>
           <div className="my-10">
              <small className="text-gray-500 font-medium">chat with us</small>
-             <p className="text-lg font-medium">info@titantrust.com</p>
+             <p className="text-lg font-medium">titantrust@accountant.com</p>
           </div>
           <div>
             <small className="text-gray-500 font-medium">mailing address</small>
