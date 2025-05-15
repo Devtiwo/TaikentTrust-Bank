@@ -6,7 +6,7 @@ export const info = [
   {
     icon: MdOutlineMarkEmailRead,
     title: "Write to us",
-    paragraph: "info@trusttitan.com"
+    paragraph: "titantrust@accountant.com"
   },
   {
     icon: BiPhoneCall,
