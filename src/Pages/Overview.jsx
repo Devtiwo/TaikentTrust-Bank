@@ -86,7 +86,6 @@ const Overview = () => {
             {/* Name section */}
             <div className="mt-4">
               <h2 className="font-bold text-lg">{user?.fname} {user?.lname}</h2>
-              <p className="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis">{user?.email}</p>
             </div>
 
             {/* Bank card section */}

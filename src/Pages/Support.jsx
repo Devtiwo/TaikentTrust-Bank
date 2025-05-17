@@ -10,11 +10,11 @@ const Support = () => {
           <h1 className="text-4xl font-medium">Get in Touch With us Today</h1>
           <div className="my-10">
              <small className="text-gray-500 font-medium">chat with us</small>
-             <p className="text-lg font-medium">titantrust@accountant.com</p>
+             <p className="text-lg font-medium">taikenttrust@accountant.com</p>
           </div>
           <div>
             <small className="text-gray-500 font-medium">mailing address</small>
-            <p className="font-medium text-lg">Titan Trust Bank</p>
+            <p className="font-medium text-lg">Taikent Trust Bank</p>
             <p className="font-medium">P.O. Box 7264 Miami, FL 33126</p>
           </div>
         </div>

@@ -36,10 +36,9 @@ const resetPasswordEmail = (user, resetLink) => {
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <style>
         img {
-          margin: 0 auto;
+          margin: 0 auto 30px;
           display: block;
-          height: 150px;
-          width: 150px;
+          height: 90px;
         }
         body {
           font-family: Roboto, sans-serif;
@@ -76,7 +75,7 @@ const resetPasswordEmail = (user, resetLink) => {
      </head>
      <body>
        <div class="container">
-         <img src="https://i.imgur.com/3JSx430.png" alt="logo" />
+         <img src="https://imgur.com/SuiJUHE.png" alt="logo" />
          <h1>Password Reset Request</h1>
          <p>Hi ${user.fname}</p>
          <p>This email is to confirm that you requested a password reset. To complete the process, click on the button below</p>
@@ -103,10 +102,9 @@ const passwordChangeEmail = (user) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
           img {
-            margin: 0 auto;
+            margin: 0 auto 30px;
             display: block;
-            height: 150px;
-            width: 150px;
+            height: 90px;
           }
           body {
             font-family: Roboto, sans-serif;
@@ -128,7 +126,7 @@ const passwordChangeEmail = (user) => {
      </head>
      <body>
        <div class="container">
-         <img src="https://i.imgur.com/3JSx430.png" alt="logo" />
+         <img src="https://imgur.com/SuiJUHE.png" alt="logo" />
          <p>Hi ${user.fname}</p>
          <p>Your password has been changed successfully. If you didn't make this change, please contact support immediately.</p>
          <p>Thanks for using our services.</p>

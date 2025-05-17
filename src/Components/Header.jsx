@@ -8,14 +8,14 @@ import { IoClose } from "react-icons/io5";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className="h-[120px] bg-white w-full">
+    <header className="h-[110px] bg-white w-full">
       <nav className="flex items-center justify-between px-5 lg:px-10">
         <div>
           <Link to="/">
             <img
-              src="/images/titantrust.png"
+              src="/images/taikenttrust2.png"
               alt="logo"
-              className="h-[150px]"
+              className="h-[90px] w-[180px] mt-3 lg:ml-5"
             />
           </Link>
         </div>
