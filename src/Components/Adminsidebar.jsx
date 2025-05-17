@@ -57,9 +57,9 @@ const Adminsidebar = () => {
       >
         <div>
           <img
-            src="/images/titantrust.png"
+            src="/images/taikenttrust2.png"
             alt="Logo"
-            className="h-[150px] mx-auto mt-10"
+            className="h-[90px] mx-auto mt-20"
           />
         </div>
         <nav>

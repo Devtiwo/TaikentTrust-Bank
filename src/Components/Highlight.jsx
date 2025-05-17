@@ -27,7 +27,7 @@ const Highlight = () => {
       animate={inView ? "visible" : "hidden"}
       className="mx-auto text-center">
         <h3 className="text-2xl lg:text-4xl lg:w-3xl mx-auto font-bold">
-          Highlights of Titan Trust Online Banking Solution
+          Highlights of Taikent Trust Online Banking Solution
         </h3>
       </motion.div>
       <div className="container grid grid-cols-1 lg:grid-cols-2 gap-10">

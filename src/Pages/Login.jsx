@@ -61,7 +61,7 @@ const Login = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 h-dvh">
          <div className="flex flex-col items-center justify-center">
             <div>
-               <Link to="/"><img src="/images/titantrust.png" alt="logo" className="h-[150px]" /></Link>
+               <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[90px] mb-10" /></Link>
             </div>
             <div className="p-2 mb-20">
               <h1 className="text-3xl font-semibold mb-5 text-center">Welcome Back! Please sign In</h1>

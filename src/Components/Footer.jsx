@@ -29,7 +29,7 @@ const Footer = () => {
             <hr className="mx-10"/>
             <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-around px-20 items-center mb-10 lg:mb-5">
                 <div>
-                    <img src="/images/titantrust.png" alt="Logo" className="h-[200px]"/>
+                    <img src="/images/taikenttrust2.png" alt="Logo" className="h-[90px] my-5"/>
                     <p className="text-sm w-xs">Secure, fast, and convenient banking at your fingertips. Manage your finances anytime, anywhere with ease. Safe transactions, seamless experience!</p>
                 </div>
                 <div>
@@ -53,7 +53,7 @@ const Footer = () => {
             </div>
             <hr className="mx-10"/>
             <div className="flex justify-center pt-10">
-                <small className="font-medium">© 2025 Titan Trust Bank. All rights reserved.</small>
+                <small className="font-medium">© 2025 Taikent Trust Bank. All rights reserved.</small>
             </div>
           </motion.div>
         </section>

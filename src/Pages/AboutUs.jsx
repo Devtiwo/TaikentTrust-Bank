@@ -11,7 +11,7 @@ const AboutUs = () => {
             <div className="flex flex-col items-center justify-center">
               <h1 className="text-4xl mb-3 font-semibold text-blue-sapphire">About Us</h1>
               <p className="text-lg/10 font-medium tracking-wider w-full max-w-lg lg:max-w-xl">
-              At Titan Trust Bank, we’re reshaping the way people experience finance in the digital age. We believe that banking should be simple, secure, and accessible to everyone—anytime, anywhere. With a perfect blend of innovation and trust, we offer a platform that empowers individuals and businesses to take full control of their financial lives, effortlessly.
+              At Taikent Trust Bank, we’re reshaping the way people experience finance in the digital age. We believe that banking should be simple, secure, and accessible to everyone—anytime, anywhere. With a perfect blend of innovation and trust, we offer a platform that empowers individuals and businesses to take full control of their financial lives, effortlessly.
               </p>
             </div>
             <div className="mt-10 mb-10 lg:mb-0 lg:mt-0 flex items-center order-first lg:order-last">
@@ -24,7 +24,7 @@ const AboutUs = () => {
             <h3 className="text-3xl mb-3">Our Mission</h3>
             <hr className="mb-5"/>
             <p className="font-medium leading-8">
-            Our mission is to empower people through innovative, secure, and user-friendly digital financial solutions. We are committed to eliminating the barriers of traditional banking by creating a seamless experience that’s fast, transparent, and reliable. Whether you're saving, investing, sending money, or managing expenses, Titan Trust makes it possible—all from the palm of your hand.
+            Our mission is to empower people through innovative, secure, and user-friendly digital financial solutions. We are committed to eliminating the barriers of traditional banking by creating a seamless experience that’s fast, transparent, and reliable. Whether you're saving, investing, sending money, or managing expenses, Taikent Trust makes it possible—all from the palm of your hand.
             </p>
           </div>
           <div className="p-8 bg-neutral-200 rounded-xl">

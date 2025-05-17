@@ -37,7 +37,7 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div className={`fixed top-0 left-0 bg-blue-bground h-full w-64 p-4 lg:w-72 z-40 lg:border-r lg:border-r-2 lg:border-r-gray-200 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0": "-translate-x-full"} lg:translate-x-0`}>
          <div>
-           <img src="/images/titantrust.png" alt="Logo" className="h-[150px] mx-auto mt-10" />
+           <img src="/images/taikenttrust2.png" alt="Logo" className="h-[90px] mx-auto mt-20" />
          </div>
          <nav>
            {dashLinks.map((link) => (
