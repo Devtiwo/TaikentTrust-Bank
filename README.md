@@ -1,12 +1,52 @@
-# React + Vite
+# Taikent Trust Bank
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> TaikentTrust is a modern, secure online banking application that allows users to manage their finances with ease. Users can view account balances, transfer funds, track transaction history, and perform essential banking operations from a clean, user-friendly interface. It also has an admin panel where admin can create user account, delete user account, top up user account balances view users transaction history and other information
 
-Currently, two official plugins are available:
+## Video
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![Watch Video Demo](https://via.placeholder.com/800x400.png?text=Click+to+Watch+Demo)](https://drive.google.com/file/d/1poM1QAapS0N2-DNIUYfve5QhR4AgNRA0/view?usp=sharing)
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- REACT (Frontend)
+- NODEJS (Backend)
+- MONGO DB (Database)
+
+## Live Demo
+[Live Demo Link](https://taikenttrust.vercel.app/)
+
+
+## Getting Started
+- clone the repository by running\
+    `git clone https://github.com/Devtiwo/TaikentTrust-Bank.git`
+
+- navigate to the folder\
+    `cd TaikentTrust-Bank`
+
+- install dependencies\
+    `npm install`
+
+- start the development server\
+    `npm run dev`
+
+## Author
+
+👤 Taiwo Adetunji
+
+- [GitHub](https://github.com/Devtiwo)
+- [LinkedIn](https://www.linkedin.com/in/taiwo-adetunji-860666225/)
+
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/Devtiwo/TaikentTrust-Bank/issues).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## 📝 License
+
+This project is MIT licensed.
