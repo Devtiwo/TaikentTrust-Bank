@@ -90,7 +90,7 @@ const Overview = () => {
 
             {/* Bank card section */}
             <div className="mt-20">
-              <h3 className="font-semibold text-gray-500">My Wallet</h3>
+              <h3 className="font-semibold text-gray-500">My Card</h3>
               <div className="w-full mt-5 h-50 rounded-xl bg-gradient-to-tr from-black via-gray-900 to-gray-300 text-white p-6 shadow-lg relative overflow-hidden">
                 {/* Decorative circles */}
                 <div className="absolute top-0 left-0 w-full h-full opacity-10">
@@ -101,9 +101,9 @@ const Overview = () => {
                 <div className="flex">
                   <FcSimCardChip className="text-5xl" />
                   <img
-                    src="/images/titantrust.png"
+                    src="/images/taikenttrust2.png"
                     alt="logo"
-                    className="absolute top-2 right-0 h-20 w-20"
+                    className="absolute top-5 right-0 h-12 "
                   />
                 </div>
                 {/* Balance + card type */}
