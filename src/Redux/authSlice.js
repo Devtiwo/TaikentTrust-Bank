@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios  from "axios";
-//  https://titantrust-bank.onrender.com
-export const baseUrl = "http://localhost:5000";
+
+export const baseUrl = "https://taikenttrust-bank.onrender.com";
 
 export const login = createAsyncThunk(
   "auth/login",
