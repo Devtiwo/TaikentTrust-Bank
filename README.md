@@ -2,15 +2,9 @@
 
 > TaikentTrust is a modern, secure online banking application that allows users to manage their finances with ease. Users can view account balances, transfer funds, track transaction history, and perform essential banking operations from a clean, user-friendly interface. It also has an admin panel where admin can create user account, delete user account, top up user account balances view users transaction history and other information
 
-![screenshot](/public/images/taikent.png)
-
-## Video
-
-[![Watch Video Demo](https://via.placeholder.com/800x400.png?text=Click+to+Watch+Demo)](https://drive.google.com/file/d/1poM1QAapS0N2-DNIUYfve5QhR4AgNRA0/view)
-
 ## Built With
 
-- REACT (Frontend)
+- REACT & REDUX (Frontend)
 - NODEJS (Backend)
 - MONGO DB (Database)
 
