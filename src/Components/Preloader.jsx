@@ -2,7 +2,7 @@ import React from 'react'
 
 const Preloader = () => {
   return (
-    <div className="h-screen flex items-center justify-center bg-white">
+    <div className="fixed inset-0 flex items-center justify-center bg-white">
       <div className="relative w-16 h-16">
         <div className="absolute w-18 h-18 border-2 border-blue-sapphire border-t-transparent rounded-full animate-spin"></div>
         <div className="absolute w-12 h-12 top-3 left-3 border-2 border-blue-hover border-b-transparent rounded-full animate-spin"></div>

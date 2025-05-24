@@ -15,18 +15,18 @@ const Footer = () => {
           className="container rounded-3xl p-20  bg-slate-600 lg:bg-gradient-to-r from-slate-900 via-[#219dd6] to-blue-sapphire text-white">
             <div className="flex flex-col gap-10 lg:flex-row justify-around mb-10">
               {info.map((items, index) => (
-                <div key={index} className="flex gap-5 px-5 lg:p-0 items-center">
+                <div key={index} className="flex gap-5 px-2 lg:p-0 items-center">
                     <div className="bg-white w-[60px] h-[60px] rounded-full flex justify-center items-center">
                       {React.createElement(items.icon, {className: "text-4xl text-black"})}
                     </div>
                     <div>
                       <p className="text-lg font-medium">{items.title}</p>
-                      <p className="text-xl font-semibold">{items.paragraph}</p>
+                      <p className="text-lg font-semibold">{items.paragraph}</p>
                     </div>
                 </div>
               ))}
             </div>
-            <hr className="mx-10"/>
+            <hr className="mx-5"/>
             <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-around px-20 items-center mb-10 lg:mb-5">
                 <div>
                     <img src="/images/taikenttrust2.png" alt="Logo" className="h-[90px] my-5"/>
