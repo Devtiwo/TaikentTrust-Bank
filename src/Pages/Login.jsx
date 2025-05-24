@@ -56,12 +56,13 @@ const Login = () => {
     } 
   });
   return (
+    <>
+    {loading && <Preloader />}
     <section>
-      {loading && <Preloader />}
       <div className="grid grid-cols-1 lg:grid-cols-2 h-dvh">
          <div className="flex flex-col items-center justify-center">
             <div>
-               <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[90px] mb-10" /></Link>
+               <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[90px] my-10" /></Link>
             </div>
             <div className="p-2 mb-20">
               <h1 className="text-3xl font-semibold mb-5 text-center">Welcome Back! Please sign In</h1>
@@ -111,6 +112,7 @@ const Login = () => {
          </div>
       </div>
     </section>
+    </>
   )
 }
 
