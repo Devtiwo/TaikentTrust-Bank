@@ -31,8 +31,8 @@ const Login = () => {
       password: ""
     },
     validationSchema: yup.object({
-      username: yup.string().required("Username is required"),
-      password: yup.string().required("password is required")
+      username: yup.string().required("Username is required").trim(),
+      password: yup.string().required("password is required").trim()
     }),
     onSubmit: async (values) => {
       setLoading(true);
