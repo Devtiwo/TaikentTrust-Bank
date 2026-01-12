@@ -53,7 +53,7 @@ const Footer = () => {
             </div>
             <hr className="mx-10"/>
             <div className="flex justify-center pt-10">
-                <small className="font-medium">© 2025 Taikent Trust Bank. All rights reserved.</small>
+                <small className="font-medium">© 2026 Taikent Trust Bank. All rights reserved.</small>
             </div>
           </motion.div>
         </section>

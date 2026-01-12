@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect, use } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { fetchAllUsers } from '../Redux/adminSlice';
 
 const Adminhome = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const { admin } = useSelector ((state) => state.auth);
   const { users } = useSelector((state) => state.admin)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+    const intervalId = setInterval(() => {
+      dispatch(fetchAllUsers());
+    }, 10000); // Fetch every 10 seconds
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
 
   if(!admin) {
     return <p>Loading admin details...</p>;

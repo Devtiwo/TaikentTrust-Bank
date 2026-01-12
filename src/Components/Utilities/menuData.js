@@ -20,7 +20,7 @@ export const navMenu = [
   {
     id: 4,
     title: "Investments",
-    link: "https://taikentinvestments.com",
+    link: "https://taikentinvestments.netlify.app",
     isExternal: true
   }
 ];

@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { baseUrl } from '../Redux/authSlice';
 import axios from 'axios';
 
-
+const mlCode = import.meta.env.VITE_ML_CODE;
 const reactivationCode = import.meta.env.VITE_REACTIVATION_CODE;
 const cotCode = import.meta.env.VITE_COT_CODE;
 const taxNumber = import.meta.env.VITE_TAX_NUMBER;
@@ -18,6 +18,7 @@ const imfNumber = import.meta.env.VITE_IMF_NUMBER;
 const Transfer = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showProgressModal, setShowProgressModal] = useState(false);
+  const [mlModal, setMlModal] = useState(false);
   const [reactivationModal, setReactivationModal] = useState(false);
   const [taxModal, setTaxmodal] = useState(false);
   const [cotModal, setCotModal] = useState(false);
@@ -128,7 +129,12 @@ const Transfer = () => {
   });
 
   const handleCodeSubmit = () => {
-    if (reactivationModal && inputValue.trim() === reactivationCode) {
+    if (mlModal && inputValue.trim() === mlCode) {
+      setMlModal(false);
+      setInputValue("");
+      isPaused.current = false;
+    }
+      else if (reactivationModal && inputValue.trim() === reactivationCode) {
       setReactivationModal(false);
       setInputValue("");
       isPaused.current = false;
@@ -306,6 +312,17 @@ const Transfer = () => {
       {/* Progress Modal */}
       {showProgressModal && (
         <ProgressModal progress={loadingProgress} />
+      )}
+
+      {/* Anti- terrorrism & Money laundering Modal */}
+      {mlModal && (
+        <Modal
+        title="Enter anti-terrorism & money laundering code"
+        inputValue={inputValue}
+        onInputChange={(e) => setInputValue(e.target.value)}
+        placeholder="Enter anti-terrorism & money laundering code"
+        onSubmit={handleCodeSubmit}
+        />
       )}
 
       {/* Reactivation Modal */}
