@@ -70,7 +70,8 @@ const Transfer = () => {
             const next = prev + 5;
             if (next === 15) {
               isPaused.current = true;
-              setReactivationModal(true);
+              setMlModal(true);
+              // setReactivationModal(true);
             };
             if (next === 35) {
               isPaused.current = true;
