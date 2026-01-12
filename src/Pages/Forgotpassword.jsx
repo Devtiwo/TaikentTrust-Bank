@@ -30,7 +30,7 @@ const Forgotpassword = () => {
     <section className="h-screen bg-blue-bground">
       <div>
         <div className="w-[190px]">
-          <Link to="/"><img src="/images/titantrust.png" alt="logo" className="h-[150px] lg:pl-10 " /></Link>
+          <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[90px] w-[180px]-10 mt-5 ml-5 lg:ml-20" /></Link>
         </div>
         <div className="container text-center">
             <h1 className="text-4xl font-semibold mb-5">Reset Your Password</h1>

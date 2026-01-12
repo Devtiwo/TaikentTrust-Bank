@@ -63,8 +63,8 @@ export const adminSlice = createSlice({
   name: "admin",
   initialState: {
     users: [],
-    status: "idle",
-    error: null,
+    fetchStatus: "idle",
+    fetchError: null,
     actionStatus: null,
     actionError: null
   },
@@ -79,15 +79,15 @@ export const adminSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAllUsers.pending, (state) => {
-      state.status = "loading";
+      state.fetchStatus = "loading";
     })
     .addCase(fetchAllUsers.fulfilled, (state, action) => {
-      state.status = "succeeded";
+      state.fetchStatus = "succeeded";
       state.users = action.payload;
     })
     .addCase(fetchAllUsers.rejected, (state, action) => {
-      state.status = "failed";
-      state.error = action.payload;
+      state.fetchStatus = "failed";
+      state.fetchError = action.payload;
     })
     .addCase(deleteUser.pending, (state) => {
       state.actionStatus = "loading";

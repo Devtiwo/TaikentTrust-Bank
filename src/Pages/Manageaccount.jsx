@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector  } from 'react-redux';
 import { fetchAllUsers, deleteUser, topUpUserBalance } from '../Redux/adminSlice';
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -8,7 +8,15 @@ import { toast } from 'react-toastify';
 
 const Manageaccount = () => {
   const dispatch = useDispatch();
-  const { users, status, error } = useSelector((state) => state.admin);
+  const { users, fetchStatus, fetchError } = useSelector((state) => state.admin);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+    const intervalId = setInterval(() => {
+      dispatch(fetchAllUsers());
+    }, 10000); // Fetch every 10 seconds
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
 
   const handleDelete = async (userId) => {
     const result = await Swal.fire({
@@ -21,6 +29,7 @@ const Manageaccount = () => {
       cancelButtonText: 'No, cancel!',
       cancelButtonColor: '#b2babb',
     });
+
     if (!result.isConfirmed) return;
     try {
       const response = await dispatch(deleteUser(userId));
@@ -79,9 +88,9 @@ const Manageaccount = () => {
       <div>
         <h1 className="text-3xl font-medium mb-2">Manage Users Account</h1>
         <p className="font-medium mb-10 text-sm">Delete user accounts or update user account balances.</p>
-        {status === "loading" && <p>Loading...</p>}
-        {status === "failed" && <p>{error}</p>}
-        {status === "succeeded" && (
+  
+        {fetchError && (<p>{error}</p>)}
+        
           <table className="w-full lg:max-w-2/3 p-5 text-sm text-left rounded-2xl lg:text-base font-medium">
             <thead className="border-b border-b-gray-300">
               <tr className="text-blue-sapphire">
@@ -109,7 +118,6 @@ const Manageaccount = () => {
               ))}
             </tbody>
           </table>
-        )}
       </div>
     </section>
   )
