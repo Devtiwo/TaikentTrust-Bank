@@ -48,7 +48,9 @@ const Overview = () => {
             </thead>
             <tbody>
               {user?.transactions && user.transactions.length > 0 ? ( 
-                user.transactions.map((transaction, index) => (
+                [...user.transactions]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .map((transaction, index) => (
                   <tr key={index} className="odd:bg-gray-100 even:bg-gray-200 font-medium">
                     <td className="p-4" style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
                       {transaction.type}

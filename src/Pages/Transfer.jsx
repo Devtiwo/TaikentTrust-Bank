@@ -8,6 +8,7 @@ import ProgressModal from '../Components/Progressmodal';
 import { toast } from 'react-toastify';
 import { baseUrl } from '../Redux/authSlice';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const mlCode = import.meta.env.VITE_ML_CODE;
 const reactivationCode = import.meta.env.VITE_REACTIVATION_CODE;
@@ -24,6 +25,8 @@ const Transfer = () => {
   const [cotModal, setCotModal] = useState(false);
   const [imfModal, setImfModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const { user } = useSelector((state) => state.user);
+  const availableBalance = user?.balance || 0;
   
   
   const isPaused = useRef(false);
@@ -61,6 +64,11 @@ const Transfer = () => {
       note: yup.string()
     }),
     onSubmit: async (values, { resetForm }) => {
+      const transferAmount = Number(values.amount);
+      if (transferAmount > availableBalance) {
+        toast.error("Insufficient balance");
+        return;
+      }
       try {
         setShowProgressModal(true);
         setLoadingProgress(0);
