@@ -37,7 +37,7 @@ const Resetpassword = () => {
     <section className="h-screen bg-blue-bground">
       <div>
         <div className="w-[190px]">
-          <Link to="/"><img src="/images/titantrust.png" alt="logo" className="h-[150px] lg:pl-10 " /></Link>
+          <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[150px] lg:pl-10 " /></Link>
         </div>
         <div className="container text-center">
             <h1 className="text-4xl font-semibold mb-5">Change Password</h1>
