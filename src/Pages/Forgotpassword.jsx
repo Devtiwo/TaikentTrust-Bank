@@ -29,8 +29,8 @@ const Forgotpassword = () => {
   return (
     <section className="h-screen bg-blue-bground">
       <div>
-        <div className="w-[190px]">
-          <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[90px] w-[180px]-10 mt-5 ml-5 lg:ml-20" /></Link>
+        <div className="w-[190px] pt-10">
+          <Link to="/"><img src="/images/taikenttrust2.png" alt="logo" className="h-[90px] w-[180px]-10 ml-5 lg:ml-20" /></Link>
         </div>
         <div className="container text-center">
             <h1 className="text-4xl font-semibold mb-5">Reset Your Password</h1>
