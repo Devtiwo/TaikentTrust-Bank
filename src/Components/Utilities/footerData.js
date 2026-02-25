@@ -16,6 +16,6 @@ export const info = [
   {
     icon: IoLocationOutline,
     title: "Our Office",
-    paragraph: "George Town, Grand Cayman KY1-1104, Cayman Islands"
+    paragraph: "George Town, Cayman Islands"
   }
 ];
