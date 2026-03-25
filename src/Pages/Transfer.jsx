@@ -20,8 +20,7 @@ const Transfer = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [mlModal, setMlModal] = useState(false);
-  const [reactivationModal, setReactivationModal] = useState(false);
-  const [taxModal, setTaxmodal] = useState(false);
+  const [taxModal, setTaxModal] = useState(false);
   const [cotModal, setCotModal] = useState(false);
   const [imfModal, setImfModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -78,18 +77,13 @@ const Transfer = () => {
             const next = prev + 5;
             if (next === 15) {
               isPaused.current = true;
-              setMlModal(true);
-              // setReactivationModal(true);
+              setCotModal(true);
             };
             if (next === 35) {
               isPaused.current = true;
-              setCotModal(true);
+              setTaxModal(true);
             };
             if (next === 50) {
-              isPaused.current = true;
-              setTaxmodal(true);
-            }
-            if (next === 75) {
               isPaused.current = true;
               setImfModal(true);
             }
@@ -138,25 +132,20 @@ const Transfer = () => {
   });
 
   const handleCodeSubmit = () => {
-    if (mlModal && inputValue.trim() === mlCode) {
-      setMlModal(false);
-      setInputValue("");
-      isPaused.current = false;
-    }
-      else if (reactivationModal && inputValue.trim() === reactivationCode) {
-      setReactivationModal(false);
-      setInputValue("");
-      isPaused.current = false;
-    } else if (cotModal && inputValue.trim() === cotCode) {
+    if (cotModal && inputValue.trim() === cotCode) {
       setCotModal(false);
       setInputValue("");
       isPaused.current = false;
     } else if (taxModal && inputValue.trim() === taxNumber) {
-      setTaxmodal(false);
+      setTaxModal(false);
       setInputValue("");
       isPaused.current = false;
     } else if (imfModal && inputValue.trim() === imfNumber) {
       setImfModal(false);
+      setInputValue("");
+      isPaused.current = false;
+    } else if (mlModal && inputValue.trim() === mlCode) {
+      setMlModal(false);
       setInputValue("");
       isPaused.current = false;
     } else {
@@ -323,28 +312,6 @@ const Transfer = () => {
         <ProgressModal progress={loadingProgress} />
       )}
 
-      {/* Anti- terrorrism & Money laundering Modal */}
-      {mlModal && (
-        <Modal
-        title="Enter anti-terrorism & money laundering code"
-        inputValue={inputValue}
-        onInputChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter anti-terrorism & money laundering code"
-        onSubmit={handleCodeSubmit}
-        />
-      )}
-
-      {/* Reactivation Modal */}
-      {reactivationModal && (
-        <Modal
-        title="Enter reactivation code"
-        inputValue={inputValue}
-        onInputChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter reactivation code"
-        onSubmit={handleCodeSubmit}
-        />
-      )}
-
       {/* Cost of transfer Modal */}
       {cotModal && (
         <Modal
@@ -374,6 +341,17 @@ const Transfer = () => {
         inputValue={inputValue}
         onInputChange={(e) => setInputValue(e.target.value)}
         placeholder="Enter IMF certificate number"
+        onSubmit={handleCodeSubmit}
+        />
+      )}
+
+      {/* Anti- terrorrism & Money laundering Modal */}
+      {mlModal && (
+        <Modal
+        title="Enter anti-terrorism & money laundering code"
+        inputValue={inputValue}
+        onInputChange={(e) => setInputValue(e.target.value)}
+        placeholder="Enter anti-terrorism & money laundering code"
         onSubmit={handleCodeSubmit}
         />
       )}
