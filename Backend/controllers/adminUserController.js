@@ -54,6 +54,7 @@ const deleteUser = async (req, res) => {
 const updateUserBalance = async (req, res) => {
   const { id } = req.params;
   const { type, amount, desc, date } = req.body;
+
   try {
     const user = await userModel.findById(id);
       if (!user) {
@@ -64,9 +65,11 @@ const updateUserBalance = async (req, res) => {
         return res.status(400).json({ status: false, message: "Insufficient funds" });
       }
       user.balance += type === "deposit" ? numericAmount : -numericAmount;
-      user.transactions.push({ type, amount: numericAmount, desc, date });
+      const newTransaction = { type, amount: numericAmount, desc, date: date ? new Date(date) : new Date() };
+      user.transactions.unshift(newTransaction);
+      user.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
       await user.save();
-      return res.status(200).json({ status: true, message: "User balance updated successfully!", balance: user.balance, transactions: user.transactions});
+      return res.status(200).json({ status: true, message: "User balance updated successfully!", balance: user.balance, transactions: user.transactions });
   } catch (error) {
     return res.status(500).json({ status: false, message: "Server error! Please try again." });
   }
@@ -74,7 +77,7 @@ const updateUserBalance = async (req, res) => {
 
 const getAdminProfile = async (req, res) => {
   try {
-    const user = await userModel.findOne({ username: req.user.username }).select("-password");
+    const user = await userModel.findById(req.user.id).select("-password");
     if (!user || user.roles !== "admin") {
       return res.status(401).json({ status: false, message: "Unauthorized access!" });
     }

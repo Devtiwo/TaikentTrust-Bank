@@ -32,6 +32,12 @@ export const userSlice = createSlice({
       state.user = null;
       state.status = "idle";
       state.error = null;
+    },
+    updateBalAndTrans: (state, action) => {
+      if(state.user) {
+        state.user.balance = action.payload.balance;
+        state.user.transactions.unshift(action.payload.transaction);
+      }
     }
   },
   extraReducers: (builder) => {
@@ -49,5 +55,5 @@ export const userSlice = createSlice({
    }
 });
 
-export const { clearUser } = userSlice.actions;
+export const { clearUser, updateBalAndTrans } = userSlice.actions;
 export default userSlice.reducer;

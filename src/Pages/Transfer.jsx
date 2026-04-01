@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -10,27 +10,87 @@ import { baseUrl } from '../Redux/authSlice';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-const mlCode = import.meta.env.VITE_ML_CODE;
-const reactivationCode = import.meta.env.VITE_REACTIVATION_CODE;
+
+
 const cotCode = import.meta.env.VITE_COT_CODE;
 const taxNumber = import.meta.env.VITE_TAX_NUMBER;
 const imfNumber = import.meta.env.VITE_IMF_NUMBER;
+const mlCode = import.meta.env.VITE_ML_CODE;
 
 const Transfer = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showProgressModal, setShowProgressModal] = useState(false);
-  const [mlModal, setMlModal] = useState(false);
-  const [taxModal, setTaxModal] = useState(false);
-  const [cotModal, setCotModal] = useState(false);
-  const [imfModal, setImfModal] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [shouldCallApi, setShouldCallApi] = useState(false);
   const { user } = useSelector((state) => state.user);
   const availableBalance = user?.balance || 0;
   
-  
   const isPaused = useRef(false);
   const isWaitingForResponse = useRef(false);
+  const hasCalledApi = useRef(false);
+  const hasShownToast = useRef(false);
+ 
+  useEffect(() => {
+    if (loadingProgress === 15) {
+      setActiveModal("cot");
+      isPaused.current = true;
+    }
+    if (loadingProgress === 35) { 
+      setActiveModal("tax");
+      isPaused.current = true;
+    }
+    if (loadingProgress === 50) { 
+      setActiveModal("imf");
+      isPaused.current = true;
+    }
+    if (loadingProgress === 75) {
+      setActiveModal("ml");
+      isPaused.current = true;
+    }
+  }, [loadingProgress]);
+ 
+  useEffect(() => {
+    if (shouldCallApi) {
+      handleTransfer();
+      setShouldCallApi(false);
+    }
+  }, [shouldCallApi]);
 
+  const handleTransfer = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(`${baseUrl}/user/transfer`, formik.values, {
+      headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.data?.status === true || response.data?.success === true) {
+        const completeInterval = setInterval(() => {
+          setLoadingProgress(prevComplete => {
+            if(prevComplete >= 100) {
+              clearInterval(completeInterval);
+              setShowProgressModal(false);
+              setLoadingProgress(0);
+              formik.resetForm();
+              setActiveModal(null);
+              if (!hasShownToast.current) {
+                toast.success(response.data?.message || "Transfer successful!");
+                hasShownToast.current = true;
+              }
+              return prevComplete;
+            }
+             return prevComplete + 2;
+          });
+        }, 50);
+      } else {
+        throw new Error(response.data?.message || "Transfer failed!");
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message ||"Transfer failed! pls try again");
+      setShowProgressModal(false);
+      setLoadingProgress(0);
+    }
+  }
+  
   const formik = useFormik({
     initialValues: {
       type: "",
@@ -48,11 +108,11 @@ const Transfer = () => {
       name: yup.string().required("Full account name is required"),
       address: yup.string().required("Bank address is required"),
       bankName: yup.string().required("Bank name is required"),
-      acctNum: yup.number().required("Account number is required"),
-      routing: yup.number().when("type", {
+      acctNum: yup.string().required("Account number is required"),
+      routing: yup.string().when("type", {
         is: "domestic",
-        then: () => yup.number().required("Routing number is required"),
-        otherwise: () => yup.number().notRequired()
+        then: () => yup.string().required("Routing number is required"),
+        otherwise: () => yup.string().notRequired()
       }),
       swift: yup.string().when("type", {
         is: "international",
@@ -62,90 +122,51 @@ const Transfer = () => {
       amount: yup.number().required("Amount is required"),
       note: yup.string()
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
+      hasShownToast.current = false;
       const transferAmount = Number(values.amount);
       if (transferAmount > availableBalance) {
         toast.error("Insufficient balance");
         return;
       }
-      try {
-        setShowProgressModal(true);
-        setLoadingProgress(0);
-        const interval = setInterval(() => {
-          if (isPaused.current || isWaitingForResponse.current) return;
-          setLoadingProgress(prev => {
-            const next = prev + 5;
-            if (next === 15) {
-              isPaused.current = true;
-              setCotModal(true);
-            };
-            if (next === 35) {
-              isPaused.current = true;
-              setTaxModal(true);
-            };
-            if (next === 50) {
-              isPaused.current = true;
-              setImfModal(true);
-            }
-            if (next >= 90) {
-              isWaitingForResponse.current = true;
-              (async () => {
-                try {
-                  const token = localStorage.getItem("token");
-                  const response = await axios.post(`${baseUrl}/user/transfer`, values, {
-                    headers: { Authorization: `Bearer ${token}` }
-                  });
-                  if (response.data.status) {
-                    const completeInterval = setInterval(() => {
-                      setLoadingProgress(prevComplete => {
-                        if(prevComplete >= 100) {
-                          clearInterval(completeInterval);
-                          setShowProgressModal(false);
-                          setLoadingProgress(0);
-                          resetForm();
-                          toast.success(response.data.message);
-                        }
-                        return prevComplete + 2;
-                      });
-                    }, 50);
-                  } else {
-                    toast.error(response.data.message || "Error processing transfer");
-                    setShowProgressModal(false);
-                    setLoadingProgress(0);
-                    clearInterval(interval);
-                  }
-                } catch (err) {
-                  toast.error(err.response?.data?.message || "server error! pls try again");
-                  setShowProgressModal(false);
-                  setLoadingProgress(0);
-                  clearInterval(interval);
-                }
-                })();
-              }
-              return next;
-            });
-          }, 400);
-      } catch (err) {
-        toast.error(err.response?.data?.message || "server error! pls try again");
-      }
-    }
-  });
 
+      isPaused.current = false;
+      isWaitingForResponse.current = false;
+      hasCalledApi.current = false;
+      setLoadingProgress(0);
+      setShowProgressModal(true);
+
+      const interval = setInterval(() => {
+        if (isPaused.current || isWaitingForResponse.current) return;
+        setLoadingProgress(prev => {
+          const next = prev + 5;
+          if (next >= 90 && !hasCalledApi.current) {
+            hasCalledApi.current = true;
+            isWaitingForResponse.current = true;
+            clearInterval(interval);
+            setShouldCallApi(true);
+          }
+          return next;
+        });
+      }, 400);
+    }
+  });    
+      
   const handleCodeSubmit = () => {
-    if (cotModal && inputValue.trim() === cotCode) {
-      setCotModal(false);
+    if (activeModal === "cot" && inputValue.trim() === cotCode) {
+      setActiveModal(null);
       setInputValue("");
       isPaused.current = false;
-    } else if (taxModal && inputValue.trim() === taxNumber) {
-      setTaxModal(false);
+    } else if (activeModal === "tax" && inputValue.trim() === taxNumber) {
+      setActiveModal(null);
       setInputValue("");
       isPaused.current = false;
-    } else if (imfModal && inputValue.trim() === imfNumber) {
-      setImfModal(false);
+    } else if (activeModal === "imf" && inputValue.trim() === imfNumber) {
+      setActiveModal(null);
       setInputValue("");
       isPaused.current = false;
-    } else if (mlModal && inputValue.trim() === mlCode) {
-      setMlModal(false);
+    } else if (activeModal === "ml" && inputValue.trim() === mlCode) {
+      setActiveModal(null);
       setInputValue("");
       isPaused.current = false;
     } else {
@@ -182,7 +203,7 @@ const Transfer = () => {
           <AnimatePresence mode="wait">
           {formik.values.type &&  (
             <motion.div
-            key={formik.values.types}
+            key={formik.values.type}
             variants={slideUp(0.3)}
             initial="hidden"
             animate="visible"
@@ -229,7 +250,7 @@ const Transfer = () => {
               {/* Account number */}
               <div className="flex flex-col mb-3">
                 <label htmlFor="acctNum" className="ml-1 text-sm font-medium">Account Number(IBAN for international transfers)</label>
-                <input type="number" id="acctNum" name="acctNum"
+                <input type="text" id="acctNum" name="acctNum"
                 placeholder="Enter account number"
                 className="px-4 py-2 my-2 border rounded-2xl w-full lg:w-2/4"
                 onChange={formik.handleChange}
@@ -243,7 +264,7 @@ const Transfer = () => {
               {formik.values.type === "domestic" && (
                 <div className="flex flex-col mb-3">
                   <label htmlFor="routing" className="ml-1 text-sm font-medium">Routing Number</label>
-                  <input type="number" id="routing" name="routing"
+                  <input type="text" id="routing" name="routing"
                   placeholder="Enter routing number"
                   className="px-4 py-2 my-2 border rounded-2xl w-full lg:w-2/4"
                   onChange={formik.handleChange}
@@ -308,12 +329,10 @@ const Transfer = () => {
       {/* Modals */}
 
       {/* Progress Modal */}
-      {showProgressModal && (
-        <ProgressModal progress={loadingProgress} />
-      )}
+      {showProgressModal && (<ProgressModal progress={loadingProgress} /> )}
 
       {/* Cost of transfer Modal */}
-      {cotModal && (
+      {activeModal === "cot" && (
         <Modal
         title="Enter Cost of Transfer code"
         inputValue={inputValue}
@@ -324,7 +343,7 @@ const Transfer = () => {
       )}
 
       {/* Tax Modal */}
-      {taxModal && (
+      {activeModal === "tax" && (
         <Modal
         title="Enter Tax clearance number"
         inputValue={inputValue}
@@ -335,7 +354,7 @@ const Transfer = () => {
       )}
 
       {/* IMF Modal */}
-      {imfModal && (
+      {activeModal === "imf" && (
         <Modal
         title="Enter IMF certificate number"
         inputValue={inputValue}
@@ -346,7 +365,7 @@ const Transfer = () => {
       )}
 
       {/* Anti- terrorrism & Money laundering Modal */}
-      {mlModal && (
+      {activeModal === "ml" && (
         <Modal
         title="Enter anti-terrorism & money laundering code"
         inputValue={inputValue}

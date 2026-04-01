@@ -3,6 +3,7 @@ import axios  from "axios";
 
 export const baseUrl = "https://taikenttrust-bank.onrender.com";
 
+
 export const login = createAsyncThunk(
   "auth/login",
   async(values, {rejectWithValue}) => {
@@ -31,12 +32,13 @@ export const fetchAdminUser = createAsyncThunk(
       const response = await axios.get(`${baseUrl}/admin/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (response.data.status) {
-        return response.data.user;
-      } else {
-        return rejectWithValue(response.data.message);
-      }
+      if (response.data.status) return response.data.user;
+      return rejectWithValue(response.data.message || 'Error fetching admin user');
     } catch (err) {
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');  
+        return rejectWithValue('Unauthorized. Please login again.');
+      }
       return rejectWithValue(err.response?.data?.message || "Error fetching admin user data");
     }
   }

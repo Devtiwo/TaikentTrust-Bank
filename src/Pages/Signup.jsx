@@ -4,8 +4,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { baseUrl } from '../Redux/authSlice';
+import { useDispatch } from 'react-redux';
+import { addUserToState } from '../Redux/adminSlice';
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       fname: '',
@@ -24,12 +27,17 @@ const Signup = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          toast.error("session expired! please login again.");
+          return;
+        }
         const response = await axios.post(`${baseUrl}/admin/register`, values, {
           headers: { Authorization: `Bearer ${token}` } 
         });
         if (response.data.status) {
           toast.success(response.data.message);
           resetForm();
+          dispatch(addUserToState(response.data.user));
         } else {
           toast.error(response.data.message || 'Error creating account');
         }

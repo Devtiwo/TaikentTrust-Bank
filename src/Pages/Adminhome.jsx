@@ -1,23 +1,22 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
-import { fetchAllUsers } from '../Redux/adminSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Adminhome = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const { admin } = useSelector ((state) => state.auth);
   const { users } = useSelector((state) => state.admin)
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchAllUsers());
-    const intervalId = setInterval(() => {
-      dispatch(fetchAllUsers());
-    }, 10000); // Fetch every 10 seconds
-    return () => clearInterval(intervalId);
-  }, [dispatch]);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   if(!admin) {
     return <p>Loading admin details...</p>;
@@ -113,7 +112,7 @@ const Adminhome = () => {
                             </tr>
                           ))
                         ) : (
-                          <tr>
+                          <tr className="font-medium bg-gray-400">
                             <td colSpan="4" className="p-5 text-gray-500 text-center">No transactions found</td>
                           </tr>
                         )}

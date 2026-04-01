@@ -11,7 +11,7 @@ export const info = [
   {
     icon: BiPhoneCall,
     title: "Call Us",
-    paragraph: "+13234506572"
+    paragraph: "+1-3450657662"
   },
   {
     icon: IoLocationOutline,

@@ -11,12 +11,10 @@ const Manageaccount = () => {
   const { users, fetchStatus, fetchError } = useSelector((state) => state.admin);
 
   useEffect(() => {
-    dispatch(fetchAllUsers());
-    const intervalId = setInterval(() => {
+    if (fetchStatus === "idle") {
       dispatch(fetchAllUsers());
-    }, 10000); // Fetch every 10 seconds
-    return () => clearInterval(intervalId);
-  }, [dispatch]);
+    }
+  }, [fetchStatus, dispatch] );  
 
   const handleDelete = async (userId) => {
     const result = await Swal.fire({
@@ -54,7 +52,7 @@ const Manageaccount = () => {
       </select>` + 
       `<input id="swal-amount" class="swal2-input" placeholder="Enter Amount" type="number" min="0" />` +
       `<input id="swal-desc" class="swal2-input" placeholder="Enter description" type="text" />` +
-      `<input type="date" id="swal-date" class="swal2-input" />`,
+      `<input id="swal-date" class="swal2-input" placeholder="Enter transaction date" type="date" />`,
       focusConfirm: false,
       confirmButtonColor: "#27ae60",
       showCancelButton: true,
@@ -63,16 +61,18 @@ const Manageaccount = () => {
         const amount = document.getElementById("swal-amount").value;
         const desc = document.getElementById("swal-desc").value;
         const date = document.getElementById("swal-date").value;
-        if (!type || !amount || !date || !desc) {
+        if (!type || !amount || !desc) {
           Swal.showValidationMessage(`all fields are required`);
+          return false;
         }
-        return { type, amount, date, desc };
+        return { type, amount: Number(amount), desc, date: date ? new Date(date).toISOString() : undefined };
       },
     });
     if (!formValues) return;
     try {
       const response = await dispatch(topUpUserBalance({ userId, ...formValues }));
       if (topUpUserBalance.fulfilled.match(response)) {
+        console.log(response.payload.transactions);
         toast.success(response.payload.message);
         dispatch(fetchAllUsers());
       } else {
@@ -89,7 +89,7 @@ const Manageaccount = () => {
         <h1 className="text-3xl font-medium mb-2">Manage Users Account</h1>
         <p className="font-medium mb-10 text-sm">Delete user accounts or update user account balances.</p>
   
-        {fetchError && (<p>{error}</p>)}
+        {fetchError && (<p className="text-red-500">{fetchError}</p>)}
         
           <table className="w-full lg:max-w-2/3 p-5 text-sm text-left rounded-2xl lg:text-base font-medium">
             <thead className="border-b border-b-gray-300">
@@ -100,10 +100,10 @@ const Manageaccount = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              { users && users.length > 0 ? ( users.map((user) => (
                 <tr key={user._id} className="odd:bg-gray-100 even:bg-gray-300">
-                  <td className="p-4">{user.fname} {user.lname}</td>
-                  <td>{user.email}</td>
+                  <td className="p-4">{user?.fname} {user?.lname}</td>
+                  <td>{user?.email}</td>
                   <td className="flex gap-5 mt-4">
                      <GiWallet
                        onClick={() => handleTopUp(user._id)}
@@ -115,7 +115,11 @@ const Manageaccount = () => {
                       />
                   </td>
                 </tr>
-              ))}
+              ))) : (
+                <tr className="border-b border-b-gray-400">
+                  <td colSpan="3" className="text-center p-10 text-gray-500">No users found</td>
+                </tr>
+              )}
             </tbody>
           </table>
       </div>

@@ -10,10 +10,7 @@ const Overview = () => {
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(fetchUser());
-    }, 30000);
-    return () => clearInterval(interval);
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return (
@@ -49,22 +46,22 @@ const Overview = () => {
             <tbody>
               {user?.transactions && user.transactions.length > 0 ? ( 
                 [...user.transactions]
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                 .map((transaction, index) => (
                   <tr key={index} className="odd:bg-gray-100 even:bg-gray-200 font-medium">
-                    <td className="p-4" style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
-                      {transaction.type}
+                    <td className="p-4" style={{color: transaction.type === "withdrawal" || transaction.type === "transfer" ? "red" : "green"}}>
+                      {transaction.type === "transfer" ? `${transaction.transferType} transfer` : transaction.type}
                     </td>
-                    <td style={{color: transaction.type === "withdrawal" ? "red" : "green"}}>
-                      {formatCurrency(transaction.amount)}
+                    <td style={{color: transaction.type === "withdrawal" || transaction.type === "transfer" ? "red" : "green"}}>
+                      {transaction.amount != null ?formatCurrency(transaction.amount) : "-"}
                     </td>
-                    <td>{transaction.desc}</td>
+                    <td>{transaction.type === "transfer" ? transaction.note || "none": transaction.desc}</td>
                     <td>{new Date(transaction.date).toLocaleDateString("en-US")}</td>
                   </tr>
                 ))
               ) : (
                 <tr className="border-b border-b-gray-400">
-                  <td colSpan="3" className="text-center p-10 text-gray-500">No transactions available</td>
+                  <td colSpan="4" className="text-center p-10 text-gray-500">No transactions available</td>
                 </tr>
               )}
             </tbody>
