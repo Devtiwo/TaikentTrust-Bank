@@ -1,9 +1,9 @@
+const transactionModel = require("../models/transactionmodel");
 const userModel = require("../models/user.model");
-const jwt = require("jsonwebtoken");
 
 const getDashboard = async (req, res) => {
   try {
-    const user = await userModel.findOne({ username: req.user.username })
+    const user = await userModel.findById(req.user.id);
     if (!user) {
       return res.status(401).json({ status: false, message: "User not found"})
     }
@@ -31,4 +31,29 @@ const changePassword = async (req, res) => {
   }
 };
 
-module.exports = { getDashboard, changePassword };
+const transfer =async (req, res) => {
+  try {
+    const { type, amount, desc, date, name, address, bankName, acctNum, routing, swift, note } = req.body;
+    const transferAmount = Number(amount);
+    if (!transferAmount || transferAmount <= 0) {
+      return res.status(400).json({ status: false, message: "Invalid amount" });
+    }
+    const user = await userModel.findById(req.user.id);
+    if(!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+    if (user.balance < transferAmount) {
+      return res.status(400).json({ status: false, message: "Insufficient balance" });
+    }
+    user.balance -= transferAmount;
+    const newTransaction = ({ type: "transfer", transferType: type, amount: transferAmount, desc, date: new Date(), name, address, bankName, acctNum, routing, swift, note });
+    user.transactions.unshift(newTransaction);
+    await user.save();
+    return res.status(200).json({ status: true, message: "Transfer successful", newBalance: user.balance, transaction: newTransaction });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ status: false, message: "server error! pls try again." });
+  }
+}
+
+module.exports = { getDashboard, changePassword, transfer };

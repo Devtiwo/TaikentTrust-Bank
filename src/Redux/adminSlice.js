@@ -7,15 +7,20 @@ export const fetchAllUsers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
+      if(!token) {
+        return rejectWithValue('Authentication token not found. Please log in again.');
+      }
       const response = await axios.get(`${baseUrl}/admin/allUsers`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.status) {
         return response.data.user;
-      } else {
-        return rejectWithValue(response.data.message || 'Error fetching all users');
       }
     } catch (error) {
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+        return rejectWithValue('Unauthorized. Please login again.');
+      }
       return rejectWithValue(error.response?.data?.message || 'Server error! Please try again');
     }
   }
@@ -69,6 +74,9 @@ export const adminSlice = createSlice({
     actionError: null
   },
   reducers: {
+    addUserToState: (state, action) => {
+      state.users.push(action.payload);
+    },
     clearUsers: (state) => {
       state.users = [];
       state.status = "idle";
@@ -105,6 +113,11 @@ export const adminSlice = createSlice({
     })
     .addCase(topUpUserBalance.fulfilled, (state, action) => {
       state.actionStatus = "succeeded";
+      const { userId, newBalance } = action.payload;
+      const user = state.users.find(user => user._id === userId);
+      if (user) {
+        user.balance = newBalance;
+      } 
     })
     .addCase(topUpUserBalance.rejected, (state, action) => {
       state.actionStatus = "failed";
@@ -113,5 +126,5 @@ export const adminSlice = createSlice({
    }
 });
 
-export const { clearUsers } = adminSlice.actions;
+export const { addUserToState, clearUsers } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -15,7 +15,7 @@ const Support = () => {
           <div>
             <small className="text-gray-500 font-medium">mailing address</small>
             <p className="font-medium text-lg">Taikent Trust Bank</p>
-            <p className="font-medium">P.O. Box 7264 Miami, FL 33126</p>
+            <p className="font-medium">P.O. Box 7264 George Town, Cayman Islands</p>
           </div>
         </div>
         {/* Contact form */}

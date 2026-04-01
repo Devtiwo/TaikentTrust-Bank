@@ -17,7 +17,7 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ status: false, message: "Invalid login credentials"});
     }
-    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {expiresIn: "1h"});
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn: "1h"});
     res.status(200).json({ status: true, message: "Login successful", token, 
       user: {
         role: user.roles,
@@ -35,7 +35,7 @@ const forgotPassword = async (req, res) => {
     if (!user) {
       return res.status(400).json({ status: false, message: "User not found!"});
     }
-    const resetToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {expiresIn: "1h"});
+    const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn: "1h"});
     user.resetToken = resetToken;
     user.tokenExpires = Date.now() + 3600000;
     await user.save();
@@ -58,7 +58,7 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ status: false, message: "passwords do not match!" });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await userModel.findOne({ email: decoded.email });
+    const user = await userModel.findById(decoded.id);
     if (!user || user.resetToken !== token || user.tokenExpires < Date.now()) {
       return res.status(400).json({ status: false, message: "Session expired! Request a new password reset link" });
     }
