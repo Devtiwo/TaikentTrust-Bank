@@ -36,7 +36,6 @@ const getAllUsers = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-
     const userToDelete = await userModel.findById(id);
     if (!userToDelete) {
       return res.status(404).json({ status: false, message: "User not found" });
@@ -87,4 +86,31 @@ const getAdminProfile = async (req, res) => {
   }
 }
 
-module.exports = { createUser, getAllUsers, deleteUser, updateUserBalance, getAdminProfile }; 
+
+const resetUserPassword = async (req, res) => {
+  const { newPassword } = req.body;
+  const { id } = req.params;
+  try {
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+    // check if password is not empty or password is less than 10 characters
+    if (!newPassword || newPassword.length < 10) {
+      return res.status(400).json({ status: false, message: "Password must be at least 10 characters long" });
+    }
+    // prevent resubmission of the same old password
+    const isSamePassword = await user.validatePassword(newPassword);
+    if (isSamePassword) {
+      return res.status(400).json({ status: false, message: "New password cannot be the same as the current password" });
+    }
+    // update password and save
+    user.password = newPassword;
+    await user.save();
+    return res.status(200).json({ status: true, message: "User password reset successfully!" });
+  } catch (error) {
+    return res.status(500).json({ status: false, message: "Server error! Please try again." });
+  }
+}
+
+module.exports = { createUser, getAllUsers, deleteUser, updateUserBalance, getAdminProfile, resetUserPassword }; 

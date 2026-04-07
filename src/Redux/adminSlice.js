@@ -7,9 +7,6 @@ export const fetchAllUsers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      if(!token) {
-        return rejectWithValue('Authentication token not found. Please log in again.');
-      }
       const response = await axios.get(`${baseUrl}/admin/allUsers`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -64,6 +61,25 @@ export const topUpUserBalance = createAsyncThunk(
   }
 );
 
+export const resetUserPassword = createAsyncThunk(
+  'admin/resetUserPassword',
+  async ({userId, newPassword}, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.patch(`${baseUrl}/admin/resetPassword/${userId}`, { newPassword }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.data.status) {
+        return response.data;
+      } else {
+        return rejectWithValue(response.data);
+      }
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "server error! pls try again" });
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -88,6 +104,7 @@ export const adminSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAllUsers.pending, (state) => {
       state.fetchStatus = "loading";
+      state.fetchError = null;
     })
     .addCase(fetchAllUsers.fulfilled, (state, action) => {
       state.fetchStatus = "succeeded";
@@ -99,6 +116,7 @@ export const adminSlice = createSlice({
     })
     .addCase(deleteUser.pending, (state) => {
       state.actionStatus = "loading";
+      state.actionError = null;
     })
     .addCase(deleteUser.fulfilled, (state, action) => {
       state.actionStatus = "succeeded";
@@ -110,6 +128,7 @@ export const adminSlice = createSlice({
     })
     .addCase(topUpUserBalance.pending, (state) => {
       state.actionStatus = "loading";
+      state.actionError = null;
     })
     .addCase(topUpUserBalance.fulfilled, (state, action) => {
       state.actionStatus = "succeeded";
@@ -122,8 +141,19 @@ export const adminSlice = createSlice({
     .addCase(topUpUserBalance.rejected, (state, action) => {
       state.actionStatus = "failed";
       state.actionError = action.payload;
-    });
-   }
+    })
+    .addCase(resetUserPassword.pending, (state) => {
+      state.actionStatus = "loading";
+      state.actionError = null;
+    })
+    .addCase(resetUserPassword.fulfilled, (state, action) => {
+      state.actionStatus = "succeeded";
+    })
+    .addCase(resetUserPassword.rejected, (state, action) => {
+      state.actionStatus = "failed";
+      state.actionError = action.payload;
+   });
+  }
 });
 
 export const { addUserToState, clearUsers } = adminSlice.actions;

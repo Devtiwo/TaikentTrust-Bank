@@ -1,8 +1,8 @@
 import React, { useEffect} from 'react';
 import { useDispatch, useSelector  } from 'react-redux';
-import { fetchAllUsers, deleteUser, topUpUserBalance } from '../Redux/adminSlice';
+import { fetchAllUsers, deleteUser, topUpUserBalance, resetUserPassword } from '../Redux/adminSlice';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { GiWallet } from "react-icons/gi";
+import { GiWallet, GiKeyLock } from "react-icons/gi";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 
@@ -72,7 +72,6 @@ const Manageaccount = () => {
     try {
       const response = await dispatch(topUpUserBalance({ userId, ...formValues }));
       if (topUpUserBalance.fulfilled.match(response)) {
-        console.log(response.payload.transactions);
         toast.success(response.payload.message);
         dispatch(fetchAllUsers());
       } else {
@@ -82,12 +81,45 @@ const Manageaccount = () => {
       toast.error("An unexpected error occurred")
     }
   };
+  
+  const handleResetPassword = async (userId) => {
+    const result = await Swal.fire({
+      title: 'Reset User Password',
+      html:`
+      <input type="password" id="swal-new-password" class="swal2-input" placeholder="Enter new password" />` +
+      `<input type="password" id="swal-confirm-password" class="swal2-input" placeholder="Confirm new password" />`,
+      focusConfirm: false,
+      confirmButtonColor: "#27ae60",
+      showCancelButton: true,
+      preConfirm: () => {
+        const newPassword = document.getElementById("swal-new-password").value;
+        const confirmPassword = document.getElementById("swal-confirm-password").value;
+        if (!newPassword || !confirmPassword) {
+          Swal.showValidationMessage(`Both password fields are required`);
+          return;
+        }
+        if (newPassword !== confirmPassword) {
+          Swal.showValidationMessage(`Passwords do not match`);
+          return;
+        }
+        return { newPassword };
+      }
+    });
+    if (!result.isConfirmed) return;
+    const formValues = result.value;
+    const response = await dispatch(resetUserPassword({ userId, newPassword: formValues.newPassword }));
+    if (resetUserPassword.fulfilled.match(response)) {
+      toast.success(response.payload.message);
+    } else {
+      toast.error(response.payload?.message || "Error resetting user password" );
+    }
+  }
 
   return (
     <section className="h-screen lg:ms-80">
       <div>
         <h1 className="text-3xl font-medium mb-2">Manage Users Account</h1>
-        <p className="font-medium mb-10 text-sm">Delete user accounts or update user account balances.</p>
+        <p className="font-medium mb-10 text-sm">Delete user accounts, update user account balances or reset user account password.</p>
   
         {fetchError && (<p className="text-red-500">{fetchError}</p>)}
         
@@ -96,6 +128,7 @@ const Manageaccount = () => {
               <tr className="text-blue-sapphire">
                 <th className="p-4">Full Name</th>
                 <th>Email</th>
+                <th>Username</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -104,7 +137,8 @@ const Manageaccount = () => {
                 <tr key={user._id} className="odd:bg-gray-100 even:bg-gray-300">
                   <td className="p-4">{user?.fname} {user?.lname}</td>
                   <td>{user?.email}</td>
-                  <td className="flex gap-5 mt-4">
+                  <td>{user?.username}</td>
+                  <td className="flex flex-wrap justify-center gap-2 lg:gap-5 mt-4">
                      <GiWallet
                        onClick={() => handleTopUp(user._id)}
                        className="text-2xl text-green-600 hover:text-green-500 font-bold cursor-pointer" title="Top up balance" 
@@ -112,6 +146,10 @@ const Manageaccount = () => {
                      <RiDeleteBin6Line
                        onClick={() => handleDelete(user._id)}
                        className="text-2xl text-red-400 hover:text-red-600 font-bold cursor-pointer" title="Delete user"
+                      />
+                      <GiKeyLock
+                       onClick={() => handleResetPassword(user._id)}
+                       className="text-2xl text-black hover:text-gray-600 font-bold cursor-pointer" title="Reset password"
                       />
                   </td>
                 </tr>
