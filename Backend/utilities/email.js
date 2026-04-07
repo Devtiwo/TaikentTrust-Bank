@@ -5,19 +5,19 @@ dotenv.config();
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
-  secure: true,
+  secure: false,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
   },
   tls: {
     rejectUnauthorized: false
-  } 
+  }
 });
 
 transporter.verify((error, success) => {
   if (error) {
-    console.log("SMTP Server is not ready to send emails", error);
+    console.log("SMTP Server is not ready to send emails");
   } else {
     console.log("SMTP Server is ready to send emails");
   }
@@ -25,7 +25,7 @@ transporter.verify((error, success) => {
 
 const resetPasswordEmail = (user, resetLink) => {
   return transporter.sendMail({
-    from: `TitanTrust <${process.env.SMTP_USER}>`,
+    from: `TaikentTrust<${process.env.SMTP_USER}>`,
     to: user.email,
     subject: "Reset your password",
     html: `
@@ -91,7 +91,7 @@ const resetPasswordEmail = (user, resetLink) => {
 
 const passwordChangeEmail = (user) => {
   return transporter.sendMail({
-    from: `TitanTrust <${process.env.SMTP_USER}>`,
+    from: `TaikentTrust <${process.env.SMTP_USER}>`,
     to: user.email,
     subject: "You've changed your password",
     html: `
@@ -129,7 +129,7 @@ const passwordChangeEmail = (user) => {
          <img src="https://imgur.com/SuiJUHE.png" alt="logo" />
          <p>Hi ${user.fname}</p>
          <p>Your password has been changed successfully. If you didn't make this change, please contact support immediately.</p>
-         <p>Thanks for using our services.</p>
+         <p>Thanks for banking with us.</p>
        </div>
      </body>
      </html>

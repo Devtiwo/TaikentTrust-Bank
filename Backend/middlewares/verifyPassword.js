@@ -4,7 +4,7 @@ const verifyPassword = async (req, res, next) => {
   const { currentpass, newpass, confirmpass } = req.body;
 
   try {
-    const user = await userModel.findOne({ username: req.user.username });
+    const user = await userModel.findById(req.user.id);
 
     if (!user) {
       return res.status(401).json({ status: false, message: "User not found" });
