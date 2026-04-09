@@ -74,7 +74,7 @@ const Login = () => {
                 <div className="flex flex-col mb-2 w-full">
                   <label htmlFor="username" className="mb-2 ml-2 text-sm font-medium">Username</label>
                   <input type="text" id="username" name="username" placeholder="Username"
-                  className="py-2 px-4 border-2 border-gray-300 rounded-3xl focus:outline-none"
+                  className="py-2 px-4 border-2 border-gray-300 rounded-3xl outline-none"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.username}
@@ -86,7 +86,7 @@ const Login = () => {
                 <div className="flex flex-col mb-2 w-full">
                   <label htmlFor="password" className="mb-2 ml-2 text-sm font-medium">Password</label>
                   <input type="password" id="password" name="password" placeholder="Password"
-                  className="py-2 px-4 border-2 border-gray-300 rounded-3xl focus:outline-none"
+                  className="py-2 px-4 border-2 border-gray-300 rounded-3xl outline-none"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}

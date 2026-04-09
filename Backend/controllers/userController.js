@@ -33,7 +33,7 @@ const changePassword = async (req, res) => {
 
 const transfer =async (req, res) => {
   try {
-    const { type, amount, desc, date, name, address, bankName, acctNum, routing, swift, note } = req.body;
+    const { type, amount, desc, date, name, address, bankName, acctNum, iban, country, routing, swift, note } = req.body;
     const transferAmount = Number(amount);
     if (!transferAmount || transferAmount <= 0) {
       return res.status(400).json({ status: false, message: "Invalid amount" });
@@ -46,7 +46,7 @@ const transfer =async (req, res) => {
       return res.status(400).json({ status: false, message: "Insufficient balance" });
     }
     user.balance -= transferAmount;
-    const newTransaction = ({ type: "transfer", transferType: type, amount: transferAmount, desc, date: new Date(), name, address, bankName, acctNum, routing, swift, note });
+    const newTransaction = ({ type: "transfer", transferType: type, amount: transferAmount, desc, date: new Date(), name, address, bankName, acctNum, iban, country, routing, swift, note });
     user.transactions.unshift(newTransaction);
     await user.save();
     return res.status(200).json({ status: true, message: "Transfer successful", newBalance: user.balance, transaction: newTransaction });
