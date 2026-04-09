@@ -10,6 +10,8 @@ const transactionSchema = new mongoose.Schema({
   address: { type: String},
   bankName: { type: String },
   acctNum: { type: String },
+  iban: { type:String },
+  country: { type: String },
   routing: { type: String },
   swift: { type: String },
   note: { type: String }
